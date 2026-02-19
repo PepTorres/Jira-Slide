@@ -2195,13 +2195,84 @@ headers = {
 <!-- ════════════════════════════════════════════════
      SLIDE 29 · DIVIDER — RUNBOOK
 ════════════════════════════════════════════════ -->
-<div class="slide slide-divider" data-title="Runbook" style="background:var(--red)">
-  <div class="divider-bg-text" style="color:rgba(0,0,0,.08)">RUN</div>
-  <span class="divider-num reveal" style="color:rgba(255,255,255,.7)">10 / Runbook</span>
-  <h2 class="disp reveal d1" style="color:var(--white)">RUNBOOK<br>DÍA DE<br>MIGRACIÓN</h2>
-  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.65);margin-top:20px">
-    DevSecOps · Ventana 19:00–23:30 · 300–400 usuarios
-  </p>
+<div class="slide slide-cover" data-title="Runbook" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
+
+  <!-- Header -->
+  <div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">RUNBOOK</span>
+      <span style="width:1px;height:10px;background:rgba(255,255,255,.15)"></span>
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.35)">10 / DÍA DE MIGRACIÓN</span>
+    </div>
+
+    <h2 class="disp reveal" style="font-size:64px;line-height:.9;color:#fff;margin:0 0 6px">DÍA DE</h2>
+    <h2 class="disp reveal d1" style="font-size:64px;line-height:.9;margin:0 0 20px">
+      <span style="color:var(--red)">MIGRA</span><span style="color:rgba(255,255,255,.18)">CIÓN</span>
+    </h2>
+
+    <div class="reveal d2" style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
+      <span style="font-family:var(--ff-mono);font-size:10px;padding:3px 10px;border-radius:3px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)">DevSecOps</span>
+      <span style="font-family:var(--ff-mono);font-size:10px;padding:3px 10px;border-radius:3px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)">19:00 – 23:30</span>
+      <span style="font-family:var(--ff-mono);font-size:10px;padding:3px 10px;border-radius:3px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.5)">300–400 usuarios</span>
+    </div>
+  </div>
+
+  <!-- Timeline rows -->
+  <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:44px;padding-top:1px">19:00</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Pre-flight check</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(22,163,74,.15);color:#4ade80;white-space:nowrap">30 min</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Confirmar acceso a JCMA, Atlassian Admin y canal de soporte activo. Verificar que SCIM está sincronizando y el snapshot de DC fue completado.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:44px;padding-top:1px">19:30</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Freeze + notificación</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">15 min</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Poner DC en modo read-only. Enviar comunicado final a usuarios con link a guía de login Cloud y canal de soporte activo durante la ventana.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:44px;padding-top:1px">19:45</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Ejecución JCMA</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">~3 h estimadas</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Lanzar plan de migración. Monitorear progreso en JCMA cada 20 min. Documentar en tracker cualquier warning o proyecto con error durante la ejecución.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(27,92,232,.12);border-radius:6px;border:1px solid rgba(27,92,232,.3)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:44px;padding-top:1px">23:00</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Validación y go / no-go ⚠</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(27,92,232,.2);color:#93c5fd;white-space:nowrap">Decisión 23:30</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Ejecutar checklist de validación estructural. Si hay bloqueantes críticos antes de las 23:30 — activar rollback. Si todo está verde — abrir acceso a Cloud y comunicar go-live.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
+    <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
+      CADA MINUTO FUERA DE VENTANA TIENE UN COSTO — EL EQUIPO DEBE SABER SU ROL ANTES DE LAS 19:00
+    </p>
+  </div>
+
 </div>
 
 
