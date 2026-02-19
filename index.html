@@ -1,0 +1,1474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jira Cloud Migration · Guía de Equipo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F2F1EE;--surface:#E8E6E2;--ink:#111110;--mute:#6B6A66;
+  --red:#1B5CE8;--red-soft:#EBF1FE;--white:#FFFFFF;--border:rgba(0,0,0,0.09);
+  --dark:#111110;--dark2:#1A1A19;
+  --ff-disp:'Bebas Neue',sans-serif;
+  --ff-body:'DM Sans',sans-serif;
+  --ff-mono:'DM Mono',monospace;
+}
+html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
+
+/* ── DECK CONTAINER ─────────────────────────────── */
+.deck{
+  position:fixed;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);
+}
+
+/* ── SLIDE ──────────────────────────────────────── */
+.slide{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;
+  pointer-events:none;
+  opacity:0;
+  transition:none;
+  overflow:hidden;
+}
+.slide.active{opacity:1;pointer-events:all;}
+
+/* ── TRANSITIONS ────────────────────────────────── */
+/* Slide entering from right */
+.slide.enter-right{
+  animation:slideInRight .55s cubic-bezier(.22,.68,0,1.2) forwards;
+}
+@keyframes slideInRight{
+  from{transform:translateX(100%);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+/* Slide entering from left */
+.slide.enter-left{
+  animation:slideInLeft .55s cubic-bezier(.22,.68,0,1.2) forwards;
+}
+@keyframes slideInLeft{
+  from{transform:translateX(-100%);opacity:0}
+  to{transform:translateX(0);opacity:1}
+}
+/* Slide exiting to left */
+.slide.exit-left{
+  animation:slideOutLeft .45s cubic-bezier(.22,.68,0,.9) forwards;
+}
+@keyframes slideOutLeft{
+  from{transform:translateX(0);opacity:1}
+  to{transform:translateX(-100%);opacity:0}
+}
+/* Slide exiting to right */
+.slide.exit-right{
+  animation:slideOutRight .45s cubic-bezier(.22,.68,0,.9) forwards;
+}
+@keyframes slideOutRight{
+  from{transform:translateX(0);opacity:1}
+  to{transform:translateX(100%);opacity:0}
+}
+
+/* Staggered content reveal */
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
+.active .reveal{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
+.d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
+.d7{transition-delay:.56s}.d8{transition-delay:.64s}
+
+/* ── NAV BAR ────────────────────────────────────── */
+.nav-bar{
+  position:fixed;bottom:0;left:0;right:0;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 40px;
+  background:rgba(242,241,238,.9);
+  backdrop-filter:blur(12px);
+  border-top:1px solid var(--border);
+}
+.nav-counter{
+  font-family:var(--ff-mono);font-size:11px;color:var(--mute);letter-spacing:.5px;
+}
+.nav-title{
+  font-size:12px;font-weight:500;color:var(--mute);
+}
+.nav-arrows{
+  display:flex;gap:8px;
+}
+.arrow-btn{
+  width:36px;height:36px;border-radius:50%;border:1px solid var(--border);
+  background:var(--white);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s;
+}
+.arrow-btn:hover{background:var(--ink);border-color:var(--ink);}
+.arrow-btn:hover svg path{stroke:white;}
+.arrow-btn:active{transform:scale(.93);}
+.arrow-btn svg{width:14px;height:14px;}
+
+/* Progress bar */
+.progress-bar{
+  position:fixed;top:0;left:0;height:2px;
+  background:var(--red);z-index:200;
+  transition:width .4s ease;
+}
+
+/* ── SECTION TAG ────────────────────────────────── */
+.tag{
+  display:inline-flex;align-items:center;gap:8px;
+  font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
+  color:var(--red);margin-bottom:16px;
+}
+.tag::before{content:'';width:18px;height:2px;background:var(--red);border-radius:2px;}
+
+/* ── TYPOGRAPHY ─────────────────────────────────── */
+.disp{font-family:var(--ff-disp);line-height:.9;letter-spacing:-.5px}
+.disp-xl{font-size:min(7.5vw,96px)}
+.disp-lg{font-size:min(6vw,84px)}
+.disp-md{font-size:min(4.5vw,60px)}
+.disp-sm{font-size:min(3.5vw,44px)}
+.body-lg{font-size:15px;line-height:1.7;color:var(--mute)}
+.body-md{font-size:13.5px;line-height:1.65;color:var(--mute)}
+.mono{font-family:var(--ff-mono);font-size:11px;color:var(--mute)}
+
+/* ── LAYOUT HELPERS ─────────────────────────────── */
+.pad{padding:72px 72px 80px}
+.pad-sm{padding:52px 72px 80px}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border)}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border)}
+.col-fill{background:var(--bg)}
+
+/* ── CARDS ──────────────────────────────────────── */
+.card{
+  background:var(--white);padding:28px 28px;
+  border:1px solid var(--border);border-radius:2px;
+}
+.card-dark{background:var(--dark);color:var(--white);}
+.card-red{background:var(--red);color:var(--white);}
+.card-surface{background:var(--surface);}
+
+/* ── CHIP / BADGE ───────────────────────────────── */
+.chip{
+  display:inline-flex;align-items:center;
+  font-size:11px;font-weight:500;letter-spacing:.3px;
+  padding:4px 10px;border-radius:100px;
+  background:var(--surface);color:var(--mute);border:1px solid var(--border);
+}
+.chip-red{background:var(--red-soft);color:var(--red);border-color:rgba(27,92,232,.2)}
+.chip-dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border-color:transparent}
+
+/* ── LIST ───────────────────────────────────────── */
+.clean-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.clean-list li{
+  display:flex;align-items:flex-start;gap:12px;
+  font-size:13.5px;color:var(--mute);line-height:1.55;
+}
+.clean-list li::before{content:'→';color:var(--red);flex-shrink:0;padding-top:1px;font-size:13px}
+.clean-list.white li{color:rgba(255,255,255,.65)}
+.clean-list.white li::before{color:rgba(255,255,255,.4)}
+
+/* Warning list */
+.warn-list li::before{content:'⚠';color:#F0A500;font-size:11px;padding-top:2px}
+
+/* ── STAT BLOCK ─────────────────────────────────── */
+.stat-block{padding:28px 24px;}
+.stat-n{font-family:var(--ff-disp);font-size:52px;line-height:1;letter-spacing:-1px}
+.stat-u{color:var(--red);font-size:36px}
+.stat-tag{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin:4px 0 8px}
+.stat-desc{font-size:12px;color:var(--mute);line-height:1.5}
+
+/* ── ROW ITEM (numbered) ────────────────────────── */
+.row-item{
+  display:flex;align-items:flex-start;gap:20px;
+  padding:18px 0;border-bottom:1px solid var(--border);
+}
+.row-item:first-child{border-top:1px solid var(--border)}
+.row-num{font-family:var(--ff-mono);font-size:11px;color:var(--mute);min-width:24px;padding-top:3px}
+.row-content h4{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
+.row-content p{font-size:13px;color:var(--mute);line-height:1.55}
+
+/* Code block */
+.code{
+  font-family:var(--ff-mono);font-size:11.5px;
+  background:var(--dark);color:#A8E6CF;
+  padding:16px 20px;border-radius:4px;line-height:1.7;
+  white-space:pre-wrap;
+}
+.code .cm{color:#5C6370}.code .kw{color:#61AFEF}.code .str{color:#98C379}
+.code .fn{color:#61AFEF}
+
+/* Table */
+.tbl{width:100%;border-collapse:collapse;font-size:12.5px}
+.tbl th{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
+  color:var(--mute);padding:10px 14px;border-bottom:1px solid var(--border);text-align:left}
+.tbl td{padding:10px 14px;border-bottom:1px solid var(--border);color:var(--ink);vertical-align:top}
+.tbl tr:last-child td{border-bottom:none}
+.tbl tr:hover td{background:var(--surface)}
+.ok{color:#16A34A;font-weight:600}.warn{color:#F0A500;font-weight:600}.bad{color:var(--red);font-weight:600}
+
+/* Phase bar */
+.phase-bar{display:flex;gap:0;height:6px;border-radius:3px;overflow:hidden;margin-top:8px}
+.ph{height:100%;transition:all .3s}
+
+/* BIG number accent */
+.big-red{font-family:var(--ff-disp);font-size:140px;line-height:1;
+  color:var(--red);opacity:.12;position:absolute;right:48px;bottom:48px;letter-spacing:-4px;
+  pointer-events:none;user-select:none}
+
+/* ─────────────────────────────────────────────────
+   SLIDE-SPECIFIC STYLES
+───────────────────────────────────────────────── */
+
+/* COVER */
+.slide-cover{background:var(--ink);}
+.cover-grid{
+  display:grid;grid-template-columns:1fr 1fr;
+  height:100%;
+}
+.cover-left{
+  display:flex;flex-direction:column;justify-content:flex-end;
+  padding:72px;border-right:1px solid rgba(255,255,255,.07);
+}
+.cover-right{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:72px;gap:20px;
+}
+.cover-label{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;
+  text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:20px;
+}
+.cover-title{
+  font-family:var(--ff-disp);
+  font-size:min(11vw,148px);
+  line-height:.85;letter-spacing:-2px;
+  color:var(--white);
+}
+.cover-title .accent{color:var(--red);}
+.cover-sub{
+  font-size:14px;line-height:1.7;color:rgba(255,255,255,.45);max-width:380px;
+}
+.cover-chapters{display:flex;flex-direction:column;gap:2px}
+.cover-ch{
+  display:flex;align-items:center;gap:14px;
+  padding:12px 16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  border-radius:2px;
+  font-size:12.5px;color:rgba(255,255,255,.5);
+  cursor:default;
+  transition:background .2s;
+}
+.cover-ch:hover{background:rgba(255,255,255,.08);color:rgba(255,255,255,.8);}
+.cover-ch-n{
+  font-family:var(--ff-mono);font-size:10px;color:var(--red);
+  background:rgba(27,92,232,.15);padding:2px 7px;border-radius:3px;
+}
+
+/* SECTION DIVIDER */
+.slide-divider{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:56px 56px 88px 56px;
+  position:relative;
+  overflow:hidden;
+}
+.slide-divider .div-left{ display:none; }
+.slide-divider .div-right{
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.slide-divider h2{
+  font-family:var(--ff-disp);
+  font-size:min(9vw, 96px);
+  line-height:.9;
+  letter-spacing:-0.5px;
+  word-break:break-word;
+  overflow-wrap:break-word;
+  white-space:normal;
+  max-width:100%;
+}
+.slide-divider::after{
+  content:'';
+  position:absolute;inset:0;
+  pointer-events:none;
+}
+.divider-bg-text{
+  position:absolute;font-family:var(--ff-disp);
+  font-size:min(18vw,160px);letter-spacing:-4px;line-height:.85;
+  color:rgba(0,0,0,.05);right:-10px;bottom:28px;white-space:nowrap;
+  pointer-events:none;user-select:none;
+  max-width:65%;overflow:hidden;
+}
+.divider-num{
+  font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;
+  text-transform:uppercase;color:var(--red);
+  margin-bottom:10px;display:block;
+}
+.divider-section{
+  display:none;
+}
+
+/* DARK SLIDE */
+.slide-dark{background:var(--dark)}
+.slide-dark .tag::before{background:var(--red)}
+.slide-dark .tag{color:var(--red)}
+
+/* RED ACCENT slide */
+.slide-red{background:var(--red)}
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progress"></div>
+
+<div class="deck" id="deck">
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 01 · COVER
+════════════════════════════════════════════════ -->
+<div class="slide slide-cover active" data-title="Inicio">
+  <div class="cover-grid">
+    <div class="cover-left">
+      <div class="cover-label reveal">Guía para equipos de migración · 2025</div>
+      <h1 class="cover-title reveal d1">
+        JIRA<br>
+        <span class="accent">CLOUD</span><br>
+        MIGRA<span style="color:rgba(255,255,255,.2)">TION</span>
+      </h1>
+      <div style="margin-top:28px;max-width:420px">
+        <p class="cover-sub reveal d2">
+          Todo lo que un equipo técnico necesita saber antes, durante y después de una migración de más de 6,000 proyectos a Jira Cloud.
+        </p>
+      </div>
+      <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap" class="reveal d3">
+        <span class="chip chip-dark">Data Center → Cloud</span>
+        <span class="chip chip-dark">+6K Proyectos</span>
+        <span class="chip chip-dark">Equipos Distribuidos</span>
+      </div>
+    </div>
+    <div class="cover-right">
+      <p style="font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px" class="reveal">Contenido</p>
+      <div class="cover-chapters">
+        <div class="cover-ch reveal d1"><span class="cover-ch-n">01</span> Pre-migración: qué controlar</div>
+        <div class="cover-ch reveal d2"><span class="cover-ch-n">02</span> Análisis de automatizaciones</div>
+        <div class="cover-ch reveal d3"><span class="cover-ch-n">03</span> Estrategia para +6,000 proyectos</div>
+        <div class="cover-ch reveal d4"><span class="cover-ch-n">04</span> Lotes o migración completa</div>
+        <div class="cover-ch reveal d5"><span class="cover-ch-n">05</span> Plugins y compatibilidad</div>
+        <div class="cover-ch reveal d6"><span class="cover-ch-n">06</span> Errores comunes y cómo evitarlos</div>
+        <div class="cover-ch reveal d7"><span class="cover-ch-n">07</span> Impacto mínimo a usuarios finales</div>
+        <div class="cover-ch reveal d8"><span class="cover-ch-n">08</span> Mejores prácticas y validaciones</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 02 · DIVIDER — PRE-MIGRACIÓN
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider" data-title="Pre-Migración" style="background:var(--bg)">
+  <div class="divider-bg-text">PREP</div>
+  <span class="divider-num reveal">01 / Pre-Migración</span>
+  <h2 class="disp reveal d1" style="color:var(--ink)">QUÉ<br>CONTROLAR</h2>
+  <p class="body-lg reveal d2" style="margin-top:20px;color:var(--mute)">
+    Antes de ejecutar cualquier migración, el equipo debe tener visibilidad total del estado actual del sitio.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 03 · INVENTARIO BASE
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Inventario Base" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Pre-Migración · Inventario</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">LO QUE DEBES<br>DOCUMENTAR PRIMERO</h2>
+
+    <div class="two-col" style="margin-top:40px;gap:32px">
+      <div>
+        <div class="row-item reveal d2">
+          <span class="row-num">01</span>
+          <div class="row-content">
+            <h4>Total de proyectos activos vs inactivos</h4>
+            <p>Clasifica por actividad: último issue creado, usuarios activos, fecha de último update. Proyectos sin movimiento en 12+ meses son candidatos a depurar, no migrar.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d3">
+          <span class="row-num">02</span>
+          <div class="row-content">
+            <h4>Issues totales por proyecto</h4>
+            <p>Jira Migration Assistant muestra el volumen. Proyectos con +100K issues requieren ventanas de migración separadas. El tiempo de migración escala linealmente con el volumen.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d4">
+          <span class="row-num">03</span>
+          <div class="row-content">
+            <h4>Esquemas compartidos</h4>
+            <p>Permission Schemes, Notification Schemes, Issue Type Schemes y Workflow Schemes. Cuántos proyectos comparten cada esquema — un cambio afecta a todos.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d5">
+          <span class="row-num">04</span>
+          <div class="row-content">
+            <h4>Usuarios y grupos</h4>
+            <p>Directorio de usuarios totales, grupos funcionales y membresías. Los usuarios deben existir en el destino Cloud antes de migrar proyectos que los referencian.</p>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="row-item reveal d2">
+          <span class="row-num">05</span>
+          <div class="row-content">
+            <h4>Custom fields y su uso real</h4>
+            <p>Jira DC acumula campos huérfanos. Exporta el listado de custom fields y cruza contra proyectos que los usan. Campos sin uso = ruido en Cloud.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d3">
+          <span class="row-num">06</span>
+          <div class="row-content">
+            <h4>Workflows únicos vs reutilizados</h4>
+            <p>Mapa de qué workflow usa cada tipo de proyecto. Los workflows muy personalizados con condiciones Groovy no migran 1:1 — necesitan reescritura.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d4">
+          <span class="row-num">07</span>
+          <div class="row-content">
+            <h4>Boards, filtros y dashboards</h4>
+            <p>Inventario de boards activos por proyecto, filtros compartidos con múltiples usuarios y dashboards usados en reportes ejecutivos. Validar post-migración uno a uno.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d5">
+          <span class="row-num">08</span>
+          <div class="row-content">
+            <h4>Attachments y almacenamiento total</h4>
+            <p>El volumen de archivos adjuntos impacta directamente el tiempo de migración. Si supera los límites de Cloud, se necesita una estrategia de externalización (S3, Confluence).</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <span class="big-red">DC</span>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 04 · HERRAMIENTAS DE DIAGNÓSTICO
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Herramientas de Diagnóstico" style="background:var(--surface)">
+  <div class="pad-sm">
+    <div class="tag reveal">Pre-Migración · Diagnóstico</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">HERRAMIENTAS<br>DE ANÁLISIS</h2>
+
+    <div class="three-col" style="margin-top:40px">
+      <div class="col-fill" style="background:var(--bg);padding:32px 28px">
+        <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:12px" class="reveal">ATLASSIAN NATIVO</div>
+        <h3 style="font-size:17px;font-weight:600;margin-bottom:12px" class="reveal d1">Jira Migration Assistant</h3>
+        <ul class="clean-list reveal d2">
+          <li>Assessment automático de compatibilidad Cloud</li>
+          <li>Reporte de apps sin versión Cloud disponible</li>
+          <li>Estimación de tiempo de migración por proyecto</li>
+          <li>Validación de usuarios y permisos antes de mover</li>
+          <li>Detección de configuraciones bloqueantes</li>
+        </ul>
+        <div style="margin-top:20px" class="reveal d3">
+          <span class="chip chip-red">Obligatorio · Primer paso</span>
+        </div>
+      </div>
+      <div class="col-fill" style="background:var(--white);padding:32px 28px">
+        <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:12px" class="reveal">POST-MIGRACIÓN</div>
+        <h3 style="font-size:17px;font-weight:600;margin-bottom:12px" class="reveal d1">Jira Site Optimizer</h3>
+        <ul class="clean-list reveal d2">
+          <li>Identifica duplicados: workflows, esquemas, fields</li>
+          <li>Detecta proyectos sin actividad reciente</li>
+          <li>Muestra boards con filtros incorrectos</li>
+          <li>Recomienda consolidación de permission schemes</li>
+          <li>Puntuación de salud del sitio Cloud</li>
+        </ul>
+        <div style="margin-top:20px" class="reveal d3">
+          <span class="chip">Usar en pre y post migración</span>
+        </div>
+      </div>
+      <div class="col-fill" style="background:var(--bg);padding:32px 28px">
+        <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:12px" class="reveal">SCRIPTING</div>
+        <h3 style="font-size:17px;font-weight:600;margin-bottom:12px" class="reveal d1">Jira REST API + Scripts</h3>
+        <ul class="clean-list reveal d2">
+          <li>Exporta inventario completo de proyectos en JSON/CSV</li>
+          <li>Conteo de issues por proyecto programáticamente</li>
+          <li>Listado de usuarios activos en últimos N días</li>
+          <li>Validación de campos personalizados en uso</li>
+          <li>Auditoría de workflows y sus transiciones</li>
+        </ul>
+        <div class="code reveal d3" style="margin-top:16px;font-size:10px">
+<span class="cm"># Total proyectos + issue count</span>
+GET /rest/api/3/project/search
+  ?maxResults=50
+  &expand=insight
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 05 · DIVIDER — AUTOMATIZACIONES
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider slide-dark" data-title="Automatizaciones">
+  <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">AUTO</div>
+  <span class="divider-num reveal">02 / Automatizaciones</span>
+  <h2 class="disp reveal d1" style="color:var(--white)">AUDITA<br><span style="color:var(--red)">TODO</span><br>LO QUE CORRE</h2>
+  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.45);margin-top:20px">
+    ScriptRunner, Automation, MuleSoft, Python, REST — cada integración puede romper silenciosamente después del go-live.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 06 · SCRIPTRUNNER
+════════════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="ScriptRunner">
+  <div class="pad-sm">
+    <div class="tag reveal">Automatizaciones</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--white)">SCRIPTRUNNER<br><span style="color:var(--red)">GROOVY → FORGE</span></h2>
+
+    <div class="two-col" style="margin-top:36px;gap:40px;align-items:start">
+      <div>
+        <p class="body-md reveal d2" style="color:rgba(255,255,255,.5);margin-bottom:24px">
+          ScriptRunner en Data Center usa Groovy con acceso total a la API Java de Jira. En Cloud ese modelo no existe — debes migrar a Atlassian Forge con TypeScript o a Cloud Automation.
+        </p>
+
+        <div style="display:flex;flex-direction:column;gap:10px" class="reveal d3">
+          <div style="padding:16px 18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:2px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px">Groovy (DC) — No compatible</div>
+            <div class="code" style="font-size:10.5px;background:rgba(0,0,0,.4)">
+<span class="cm">// Post function Groovy</span>
+<span class="kw">def</span> issue = issue
+<span class="kw">def</span> customField = issue
+  .getCustomFieldValue(<span class="str">"CF_ID"</span>)
+ComponentAccessor.workflowManager
+  .progressWorkflowAction(...)
+            </div>
+          </div>
+          <div style="padding:16px 18px;background:rgba(27,92,232,.1);border:1px solid rgba(27,92,232,.2);border-radius:2px">
+            <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:8px">Forge TypeScript (Cloud) — Equivalente</div>
+            <div class="code" style="font-size:10.5px;background:rgba(0,0,0,.4)">
+<span class="cm">// Forge Post Function</span>
+<span class="kw">export const</span> <span class="fn">handler</span> = <span class="kw">async</span>(ctx) => {
+  <span class="kw">const</span> { issueId } = ctx.payload
+  <span class="kw">await</span> api.asApp().<span class="fn">requestJira</span>(
+    route<span class="str">`/rest/api/3/issue/${issueId}`</span>)
+}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:4px" class="reveal d2">Inventario de scripts a revisar</div>
+          <div class="row-item reveal d2" style="border-color:rgba(255,255,255,.07)">
+            <span class="row-num">🔴</span>
+            <div class="row-content">
+              <h4 style="color:var(--white)">Post Functions personalizadas</h4>
+              <p style="color:rgba(255,255,255,.4)">Cada post function Groovy debe reescribirse en Forge. Identificar cuántas existen y en cuántos workflows.</p>
+            </div>
+          </div>
+          <div class="row-item reveal d3" style="border-color:rgba(255,255,255,.07)">
+            <span class="row-num">🔴</span>
+            <div class="row-content">
+              <h4 style="color:var(--white)">Condiciones y Validaciones</h4>
+              <p style="color:rgba(255,255,255,.4)">Condiciones Groovy que bloquean transiciones. Pueden reemplazarse parcialmente con Cloud Automation rules.</p>
+            </div>
+          </div>
+          <div class="row-item reveal d4" style="border-color:rgba(255,255,255,.07)">
+            <span class="row-num">🟡</span>
+            <div class="row-content">
+              <h4 style="color:var(--white)">Script Listeners y Behaviours</h4>
+              <p style="color:rgba(255,255,255,.4)">Field Behaviours (visibilidad condicional) no tienen equivalente directo en Cloud — se replican con UI modifications en Forge.</p>
+            </div>
+          </div>
+          <div class="row-item reveal d5" style="border-color:rgba(255,255,255,.07)">
+            <span class="row-num">🟢</span>
+            <div class="row-content">
+              <h4 style="color:var(--white)">REST Endpoints expuestos</h4>
+              <p style="color:rgba(255,255,255,.4)">Servicios REST via ScriptRunner se reemplazan con Forge Connect o Forge Remote Functions.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 07 · AUTOMATION + MULE + PYTHON
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Automation / Mule / Python" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Automatizaciones</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">INTEGRACIONES<br>EXTERNAS</h2>
+
+    <div class="three-col" style="margin-top:36px">
+
+      <div class="col-fill" style="background:var(--white);padding:28px 24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px" class="reveal">
+          <span style="background:#00A1E0;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px">MULE</span>
+          <span style="font-size:13px;font-weight:600;color:var(--ink)">MuleSoft / AnyPoint</span>
+        </div>
+        <ul class="clean-list reveal d1">
+          <li>Auditar cada flow que apunte a la URL de Jira DC</li>
+          <li>La URL base cambia: <code style="font-size:10px;background:var(--surface);padding:1px 5px;border-radius:2px">company.atlassian.net</code></li>
+          <li>Cambio de autenticación: Basic Auth → OAuth 2.0</li>
+          <li>Validar que los API endpoints usados existen en Cloud API v3</li>
+          <li>Campos customizados mantienen ID pero cambian el formato de respuesta</li>
+          <li>Probar en ambiente staging antes del go-live</li>
+        </ul>
+        <div style="margin-top:16px;padding:12px;background:var(--red-soft);border-radius:3px" class="reveal d2">
+          <p style="font-size:11.5px;color:var(--red);font-weight:500">⚠ Los flows que usan <strong>Jira Server REST API v2</strong> pueden tener diferencias en respuestas JSON con Cloud API v3.</p>
+        </div>
+      </div>
+
+      <div class="col-fill" style="background:var(--surface);padding:28px 24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px" class="reveal">
+          <span style="background:#3670A0;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px">PYTHON</span>
+          <span style="font-size:13px;font-weight:600;color:var(--ink)">Scripts Python / Jira SDK</span>
+        </div>
+        <ul class="clean-list reveal d1">
+          <li>Revisar versión de librería: <code style="font-size:10px;background:var(--bg);padding:1px 5px;border-radius:2px">jira</code> vs <code style="font-size:10px;background:var(--bg);padding:1px 5px;border-radius:2px">atlassian-python-api</code></li>
+          <li>Actualizar base URL y credenciales en config</li>
+          <li>Pasar de Basic Auth a API Token (token de Atlassian Cloud)</li>
+          <li>Revisar scripts de bulk: creación, edición y transición de issues</li>
+          <li>Validar paginación — Cloud tiene límites diferentes de maxResults</li>
+          <li>Tests de regresión sobre los flujos críticos</li>
+        </ul>
+        <div class="code reveal d2" style="margin-top:16px;font-size:10px">
+<span class="cm"># Cloud: API Token en header</span>
+headers = {
+  <span class="str">"Authorization"</span>: <span class="str">f"Bearer {TOKEN}"</span>,
+  <span class="str">"Content-Type"</span>: <span class="str">"application/json"</span>
+}
+        </div>
+      </div>
+
+      <div class="col-fill" style="background:var(--white);padding:28px 24px">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px" class="reveal">
+          <span style="background:var(--ink);color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px">CLOUD AUTO</span>
+          <span style="font-size:13px;font-weight:600;color:var(--ink)">Jira Cloud Automation</span>
+        </div>
+        <ul class="clean-list reveal d1">
+          <li>Las reglas de DC Automation <strong>no migran automáticamente</strong></li>
+          <li>Exportar reglas desde DC → revisar componentes incompatibles</li>
+          <li>Triggers "Issue created / updated" — funcionan igual</li>
+          <li>Actions con Groovy inline → reescribir en JSON o Smart Values</li>
+          <li>Smart Values reemplaza la mayoría de lógicas simples</li>
+          <li>Automation for Jira Cloud tiene rate limits: 100 acciones/regla/hora en algunos planes</li>
+        </ul>
+        <div style="margin-top:16px;padding:12px;background:#F0F9E8;border-radius:3px" class="reveal d2">
+          <p style="font-size:11.5px;color:#16A34A;font-weight:500">✓ Cloud Automation es más potente y sin costo adicional en planes Standard+</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 08 · DIVIDER — ESTRATEGIA 6K
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider" data-title="Estrategia 6,000 proyectos" style="background:var(--red)">
+  <div class="divider-bg-text" style="color:rgba(0,0,0,.08)">6K</div>
+  <span class="divider-num reveal" style="color:rgba(255,255,255,.7)">03 / Escala</span>
+  <h2 class="disp reveal d1" style="color:var(--white)">+6,000<br>PROYECTOS</h2>
+  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.65);margin-top:20px">
+    No todos los proyectos son iguales. La clave está en clasificar antes de mover.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 09 · CLASIFICACIÓN DE PROYECTOS
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Clasificación de Proyectos" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Estrategia · +6K Proyectos</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">CLASIFICA ANTES<br>DE MIGRAR</h2>
+
+    <div style="margin-top:36px;display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border)" class="reveal d2">
+      <div style="background:var(--white);padding:28px 24px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#16A34A;margin-bottom:10px">Tier A · Migrar</div>
+        <div style="font-family:var(--ff-disp);font-size:36px;color:#16A34A;margin-bottom:8px">~30%</div>
+        <p style="font-size:12px;color:var(--mute);margin-bottom:14px">Proyectos activos, con usuarios frecuentes y valor operativo claro</p>
+        <ul class="clean-list" style="gap:6px">
+          <li style="font-size:12px">Issues en últimos 90 días</li>
+          <li style="font-size:12px">Usuarios activos verificados</li>
+          <li style="font-size:12px">Integrados con herramientas clave</li>
+          <li style="font-size:12px">Referenciados en reportes ejecutivos</li>
+        </ul>
+      </div>
+      <div style="background:var(--bg);padding:28px 24px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#F0A500;margin-bottom:10px">Tier B · Evaluar</div>
+        <div style="font-family:var(--ff-disp);font-size:36px;color:#F0A500;margin-bottom:8px">~25%</div>
+        <p style="font-size:12px;color:var(--mute);margin-bottom:14px">Actividad esporádica o valor histórico que requiere decisión del owner</p>
+        <ul class="clean-list" style="gap:6px">
+          <li style="font-size:12px">Último issue: 3–12 meses</li>
+          <li style="font-size:12px">Pocos usuarios activos</li>
+          <li style="font-size:12px">Sin integraciones críticas</li>
+          <li style="font-size:12px">Requiere validación con el área</li>
+        </ul>
+      </div>
+      <div style="background:var(--white);padding:28px 24px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#6B6A66;margin-bottom:10px">Tier C · Archivar</div>
+        <div style="font-family:var(--ff-disp);font-size:36px;color:#6B6A66;margin-bottom:8px">~30%</div>
+        <p style="font-size:12px;color:var(--mute);margin-bottom:14px">Sin actividad en 12+ meses. Migrar solo si hay requerimiento legal o de auditoría</p>
+        <ul class="clean-list" style="gap:6px">
+          <li style="font-size:12px">Sin actividad &gt; 12 meses</li>
+          <li style="font-size:12px">Usuarios inactivos o fuera de la organización</li>
+          <li style="font-size:12px">Sin dependencias externas</li>
+          <li style="font-size:12px">Exportar a CSV/Confluence y cerrar</li>
+        </ul>
+      </div>
+      <div style="background:var(--red);padding:28px 24px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:10px">Tier D · Eliminar</div>
+        <div style="font-family:var(--ff-disp);font-size:36px;color:var(--white);margin-bottom:8px">~15%</div>
+        <p style="font-size:12px;color:rgba(255,255,255,.65);margin-bottom:14px">Proyectos de prueba, demos o sin datos relevantes. Eliminar con aprobación documentada</p>
+        <ul class="clean-list white" style="gap:6px">
+          <li style="font-size:12px">Proyectos TEST / DEMO / SANDBOX</li>
+          <li style="font-size:12px">Sin issues reales</li>
+          <li style="font-size:12px">Creados por usuarios que ya no están</li>
+          <li style="font-size:12px">Aprobación del área de TI requerida</li>
+        </ul>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;padding:14px 20px;background:var(--surface);border-radius:2px;display:flex;align-items:center;gap:12px" class="reveal d3">
+      <span style="font-size:18px">💡</span>
+      <p style="font-size:13px;color:var(--mute)"><strong style="color:var(--ink)">Recomendación:</strong> Si de 6,000 proyectos logras que el equipo valide con los owners y eliminas el 45% (Tier C+D), migras ~3,300 proyectos — manejable en lotes de 500–800 en 6–8 semanas.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 10 · LOTES O COMPLETO
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Lotes vs Migración Completa" style="background:var(--surface)">
+  <div class="pad-sm">
+    <div class="tag reveal">Estrategia · Enfoque</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">¿LOTES O TODO<br>DE UNA VEZ?</h2>
+
+    <div class="two-col" style="margin-top:36px;gap:2px;background:var(--border);align-items:stretch">
+      <div style="background:var(--white);padding:40px 36px">
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--ink);margin-bottom:4px" class="reveal">MIGRACIÓN</div>
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--red);margin-bottom:20px" class="reveal">EN LOTES ✓</div>
+
+        <ul class="clean-list reveal d2">
+          <li>Control total: si algo falla, el impacto es parcial</li>
+          <li>Permite aprender y ajustar entre lote y lote</li>
+          <li>Usuarios finales se adaptan gradualmente</li>
+          <li>El equipo valida cada lote antes del siguiente</li>
+          <li>Permite detectar issues con boards y filtros compartidos</li>
+          <li>Lotes por área de negocio: TI, Finanzas, Operaciones…</li>
+        </ul>
+
+        <div style="margin-top:24px;padding:16px 18px;background:var(--bg);border-radius:2px" class="reveal d3">
+          <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);margin-bottom:10px">Tamaño de lote recomendado (+6K proyectos)</div>
+          <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px">
+            <div style="text-align:center;padding:10px;background:var(--white);border-radius:2px">
+              <div style="font-family:var(--ff-disp);font-size:28px;color:var(--ink)">500</div>
+              <div style="font-size:10px;color:var(--mute)">Bajo riesgo</div>
+            </div>
+            <div style="text-align:center;padding:10px;background:var(--red-soft);border-radius:2px">
+              <div style="font-family:var(--ff-disp);font-size:28px;color:var(--red)">200</div>
+              <div style="font-size:10px;color:var(--mute)">Proyectos críticos</div>
+            </div>
+            <div style="text-align:center;padding:10px;background:var(--white);border-radius:2px">
+              <div style="font-family:var(--ff-disp);font-size:28px;color:var(--ink)">50</div>
+              <div style="font-size:10px;color:var(--mute)">Piloto inicial</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="background:var(--bg);padding:40px 36px;position:relative;overflow:hidden">
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--mute);margin-bottom:4px" class="reveal">MIGRACIÓN</div>
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--mute);margin-bottom:20px" class="reveal">COMPLETA ✗</div>
+
+        <ul class="clean-list reveal d2">
+          <li>Un error afecta todos los proyectos simultáneamente</li>
+          <li>Imposible hacer rollback de 6,000 proyectos</li>
+          <li>El Migration Assistant puede fallar o timeout con volúmenes muy altos</li>
+          <li>No hay capacidad de aprendizaje entre lotes</li>
+          <li>El equipo de soporte colapsa con consultas simultáneas</li>
+          <li>Atlassian mismo NO recomienda este enfoque para +1,000 proyectos</li>
+        </ul>
+
+        <div style="margin-top:24px;padding:16px 18px;background:var(--red-soft);border-radius:2px;border-left:3px solid var(--red)" class="reveal d3">
+          <p style="font-size:12.5px;color:var(--red);font-weight:500">
+            ⚠ Atlassian limita las migraciones en cola. Proyectos muy grandes (500K+ issues) requieren coordinar con soporte de Atlassian con anticipación de semanas.
+          </p>
+        </div>
+
+        <div style="font-family:var(--ff-disp);font-size:120px;color:rgba(0,0,0,.04);position:absolute;right:-10px;bottom:-20px">NO</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 11 · DIVIDER — PLUGINS
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider slide-dark" data-title="Plugins y Apps">
+  <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">APPS</div>
+  <span class="divider-num reveal">04 / Plugins</span>
+  <h2 class="disp reveal d1" style="color:var(--white)">APPS Y<br><span style="color:var(--red)">PLUGINS</span></h2>
+  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.45);margin-top:20px">
+    El Atlassian Marketplace distingue entre apps DC y Cloud. Muchas no tienen equivalente. Necesitas un plan antes del go-live.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 12 · MATRIZ DE COMPATIBILIDAD APPS
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Compatibilidad de Apps" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Plugins · Compatibilidad</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">MATRIZ DE<br>APPS COMUNES</h2>
+
+    <div style="margin-top:32px;overflow:auto" class="reveal d2">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th>App / Plugin</th>
+            <th>Tipo DC</th>
+            <th>Disponible Cloud</th>
+            <th>Alternativa Cloud</th>
+            <th>Acción requerida</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>ScriptRunner</strong></td>
+            <td>Groovy</td>
+            <td><span class="bad">Parcial</span></td>
+            <td>ScriptRunner for Jira Cloud + Forge</td>
+            <td>Reescribir scripts críticos</td>
+          </tr>
+          <tr>
+            <td><strong>Tempo Timesheets</strong></td>
+            <td>Time tracking</td>
+            <td><span class="ok">Sí</span></td>
+            <td>Tempo Cloud (misma app)</td>
+            <td>Migrar configuración y datos</td>
+          </tr>
+          <tr>
+            <td><strong>Zephyr Scale</strong></td>
+            <td>Test mgmt</td>
+            <td><span class="ok">Sí</span></td>
+            <td>Zephyr Scale for Cloud</td>
+            <td>Migration path documentado</td>
+          </tr>
+          <tr>
+            <td><strong>BigPicture</strong></td>
+            <td>Roadmaps</td>
+            <td><span class="ok">Sí</span></td>
+            <td>BigPicture Cloud</td>
+            <td>Verificar datos de plan y releases</td>
+          </tr>
+          <tr>
+            <td><strong>Structure</strong></td>
+            <td>Jerarquías</td>
+            <td><span class="warn">Limitado</span></td>
+            <td>Structure Cloud (menos funciones)</td>
+            <td>Evaluar si las funciones críticas están</td>
+          </tr>
+          <tr>
+            <td><strong>Jira Misc Workflow Extensions</strong></td>
+            <td>Workflow utils</td>
+            <td><span class="bad">No</span></td>
+            <td>Cloud Automation + Forge</td>
+            <td>Reemplazar función por función</td>
+          </tr>
+          <tr>
+            <td><strong>Insight (Assets)</strong></td>
+            <td>CMDB/Assets</td>
+            <td><span class="ok">Sí (nativo)</span></td>
+            <td>Jira Service Mgmt Assets</td>
+            <td>Script de migración de objetos</td>
+          </tr>
+          <tr>
+            <td><strong>Portfolio for Jira</strong></td>
+            <td>Planes</td>
+            <td><span class="ok">Sí (nativo)</span></td>
+            <td>Advanced Roadmaps (Premium)</td>
+            <td>Requiere plan Premium</td>
+          </tr>
+          <tr>
+            <td><strong>EasyBI / Tableau</strong></td>
+            <td>Reportes</td>
+            <td><span class="warn">Verificar</span></td>
+            <td>EasyBI Cloud / Atlassian Analytics</td>
+            <td>Actualizar conexiones datasource</td>
+          </tr>
+          <tr>
+            <td><strong>Apps custom internas</strong></td>
+            <td>Connect/P2</td>
+            <td><span class="bad">No automático</span></td>
+            <td>Migrar a Forge</td>
+            <td>Re-desarrollo obligatorio</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div style="margin-top:16px;display:flex;gap:20px;flex-wrap:wrap" class="reveal d3">
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px"><span class="ok">●</span> Compatible directo</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px"><span class="warn">●</span> Compatible con limitaciones</div>
+      <div style="display:flex;align-items:center;gap:6px;font-size:12px"><span class="bad">●</span> Requiere trabajo adicional o sustitución</div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 13 · DIVIDER — ERRORES COMUNES
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider" data-title="Errores Comunes" style="background:var(--ink)">
+  <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">ERR</div>
+  <span class="divider-num reveal">05 / Errores</span>
+  <h2 class="disp reveal d1" style="color:var(--white)">ERRORES<br><span style="color:var(--red)">COMUNES</span></h2>
+  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.4);margin-top:20px">
+    Documentados en campo. La mayoría son evitables con una buena preparación.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 14 · ERRORES TÉCNICOS
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Errores Técnicos" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Errores comunes · Técnicos</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">LO QUE<br>SUELE FALLAR</h2>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-top:36px">
+
+      <div style="background:var(--white);padding:28px 26px" class="reveal d2">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:14px">Issues no visibles en boards</div>
+        <p style="font-size:13px;color:var(--mute);margin-bottom:12px">Issues migradas aparecen en el proyecto pero no en los tableros. Causa: el filtro del board hace referencia a proyectos, sprints o estados que no existen en Cloud.</p>
+        <div style="padding:12px;background:var(--red-soft);border-radius:2px">
+          <p style="font-size:11.5px;color:var(--red)"><strong>Fix:</strong> Verificar el filtro JQL del board post-migración. Reconstruir sprints si fueron migrados con estado inconsistente.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);padding:28px 26px" class="reveal d3">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:14px">Duplicidad de migraciones</div>
+        <p style="font-size:13px;color:var(--mute);margin-bottom:12px">Un proyecto migrado dos veces genera issues duplicadas con IDs distintos. Causa: no se marcó el proyecto como "migrado" en el tracker, o se reinició la migración creyendo que había fallado.</p>
+        <div style="padding:12px;background:var(--red-soft);border-radius:2px">
+          <p style="font-size:11.5px;color:var(--red)"><strong>Fix:</strong> Llevar un control de estado por proyecto (Google Sheets / Jira issue). Verificar en destino antes de reiniciar cualquier migración.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--surface);padding:28px 26px" class="reveal d4">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#F0A500;margin-bottom:14px">Usuarios no encontrados post-migración</div>
+        <p style="font-size:13px;color:var(--mute);margin-bottom:12px">Issues asignadas a usuarios que no existen en Cloud quedan sin asignado. Causa: el usuario no aceptó la invitación de Cloud o su email corporativo difiere del registrado en DC.</p>
+        <div style="padding:12px;background:#FFFBEB;border-radius:2px">
+          <p style="font-size:11.5px;color:#F0A500"><strong>Fix:</strong> Pre-verificar que todos los usuarios relevantes tengan cuenta activa en Cloud. Sincronizar directorio antes de migrar.</p>
+        </div>
+      </div>
+
+      <div style="background:var(--white);padding:28px 26px" class="reveal d5">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#F0A500;margin-bottom:14px">Permisos incorrectos en destino</div>
+        <p style="font-size:13px;color:var(--mute);margin-bottom:12px">Usuarios con acceso en DC no pueden ver el proyecto en Cloud. Causa: los permission schemes no se mapean 1:1. Los grupos de DC pueden no existir con el mismo nombre en Cloud.</p>
+        <div style="padding:12px;background:#FFFBEB;border-radius:2px">
+          <p style="font-size:11.5px;color:#F0A500"><strong>Fix:</strong> Documentar permission schemes y grupos antes de migrar. Realizar UAT con usuarios de distintos roles inmediatamente post-migración.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 15 · MÁS ERRORES
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Más Errores a Evitar" style="background:var(--surface)">
+  <div class="pad-sm">
+    <div class="tag reveal">Errores comunes · Continuación</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">MÁS SITUACIONES<br>A PREVENIR</h2>
+
+    <div style="margin-top:36px;display:flex;flex-direction:column;gap:0">
+      <div class="row-item reveal d2">
+        <span class="row-num" style="color:var(--red)">⚠</span>
+        <div class="row-content">
+          <h4>Timeout en proyectos con millones de attachments</h4>
+          <p>La migración de archivos adjuntos es la operación más lenta. Proyectos con +50GB de attachments pueden tardar días. Considera externalizar attachments a S3 o eliminar los obsoletos antes de migrar.</p>
+        </div>
+      </div>
+      <div class="row-item reveal d3">
+        <span class="row-num" style="color:var(--red)">⚠</span>
+        <div class="row-content">
+          <h4>Workflows con condiciones Groovy que bloquean transiciones silenciosamente</h4>
+          <p>En Cloud, una condición incompatible no lanza error visible — simplemente no muestra el botón de transición. Los usuarios reportan que "el flujo está roto" sin mensaje de error. Probar cada transición en staging con el rol correcto.</p>
+        </div>
+      </div>
+      <div class="row-item reveal d4">
+        <span class="row-num" style="color:#F0A500)">⚠</span>
+        <div class="row-content">
+          <h4>Links entre issues de distintos proyectos no migran correctamente</h4>
+          <p>Si el proyecto A está migrado y el proyecto B todavía no, los issue links entre ellos quedarán rotos. Planear la migración de proyectos relacionados en el mismo lote o en lotes consecutivos.</p>
+        </div>
+      </div>
+      <div class="row-item reveal d5">
+        <span class="row-num" style="color:#F0A500">⚠</span>
+        <div class="row-content">
+          <h4>Custom fields tipo "User Picker" con usuarios inactivos</h4>
+          <p>Campos de selección de usuario que tienen valores de personas que ya no están en la organización generan errores de validación en Cloud. Limpiar antes de migrar o mapear a un usuario genérico.</p>
+        </div>
+      </div>
+      <div class="row-item reveal d6">
+        <span class="row-num" style="color:var(--mute)">ℹ</span>
+        <div class="row-content">
+          <h4>Sprint que quedaron en estado "closed" no migran con el nombre correcto</h4>
+          <p>Sprints cerrados en DC a veces migran con IDs numéricos en lugar de nombres. Afecta JQL queries que filtran por nombre de sprint. Documentar los sprints activos más importantes antes de migrar.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 16 · DIVIDER — USUARIOS FINALES
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider" data-title="Impacto a Usuarios" style="background:var(--bg)">
+  <div class="divider-bg-text">MIN</div>
+  <span class="divider-num reveal">06 / Usuarios</span>
+  <h2 class="disp reveal d1" style="color:var(--ink)">IMPACTO<br><span style="color:var(--red)">MÍNIMO</span><br>A USUARIOS</h2>
+  <p class="body-lg reveal d2" style="margin-top:20px;color:var(--mute)">
+    El go-live es un momento crítico. El 80% de los problemas post-migración son de adopción, no técnicos.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 17 · ESTRATEGIA DE IMPACTO MÍNIMO
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Estrategia Usuarios" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Usuarios finales · Estrategia</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">CÓMO PROTEGER<br>A TUS USUARIOS</h2>
+
+    <div class="two-col" style="margin-top:36px;align-items:start">
+      <div style="display:flex;flex-direction:column;gap:16px">
+        <div style="background:var(--white);padding:22px 24px;border:1px solid var(--border)" class="reveal d2">
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:8px">ANTES DEL GO-LIVE</div>
+          <h4 style="font-size:14px;font-weight:600;margin-bottom:8px">Comunicación anticipada</h4>
+          <ul class="clean-list" style="gap:6px">
+            <li style="font-size:12.5px">Aviso 2 semanas antes con fecha y hora exacta</li>
+            <li style="font-size:12.5px">Mapa de qué proyectos migran en cada lote</li>
+            <li style="font-size:12.5px">Guía rápida de diferencias DC → Cloud UI</li>
+            <li style="font-size:12.5px">Canal de dudas habilitado (Teams/Slack)</li>
+          </ul>
+        </div>
+        <div style="background:var(--white);padding:22px 24px;border:1px solid var(--border)" class="reveal d3">
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:8px">VENTANA DE MIGRACIÓN</div>
+          <h4 style="font-size:14px;font-weight:600;margin-bottom:8px">Timing estratégico</h4>
+          <ul class="clean-list" style="gap:6px">
+            <li style="font-size:12.5px">Ejecutar en viernes tarde o fines de semana</li>
+            <li style="font-size:12.5px">Evitar picos de trabajo (fin de sprint, cierres de mes)</li>
+            <li style="font-size:12.5px">Notificar freeze de actividad 2h antes de migrar</li>
+            <li style="font-size:12.5px">Tener backup del proyecto exportado antes de iniciar</li>
+          </ul>
+        </div>
+        <div style="background:var(--white);padding:22px 24px;border:1px solid var(--border)" class="reveal d4">
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:8px">POST GO-LIVE</div>
+          <h4 style="font-size:14px;font-weight:600;margin-bottom:8px">Soporte inmediato</h4>
+          <ul class="clean-list" style="gap:6px">
+            <li style="font-size:12.5px">Equipo de soporte dedicado las primeras 72h</li>
+            <li style="font-size:12.5px">FAQ actualizado con los primeros 10 problemas detectados</li>
+            <li style="font-size:12.5px">Champions por área que validen con sus equipos</li>
+            <li style="font-size:12.5px">Ticket de rollback pre-aprobado si hay incidente crítico</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:14px">
+        <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mute)" class="reveal d2">Lo que más confunde a los usuarios</div>
+
+        <div style="background:var(--red);padding:20px 22px;border-radius:2px" class="reveal d3">
+          <h4 style="font-size:14px;font-weight:600;color:white;margin-bottom:6px">URL del sitio cambia</h4>
+          <p style="font-size:12.5px;color:rgba(255,255,255,.7)">De <code style="background:rgba(0,0,0,.2);padding:1px 5px;border-radius:2px;font-size:10px">jira.empresa.com</code> a <code style="background:rgba(0,0,0,.2);padding:1px 5px;border-radius:2px;font-size:10px">empresa.atlassian.net</code>. Actualizar bookmarks, integraciones y documentación.</p>
+        </div>
+        <div style="background:var(--dark);padding:20px 22px;border-radius:2px" class="reveal d4">
+          <h4 style="font-size:14px;font-weight:600;color:white;margin-bottom:6px">Login diferente</h4>
+          <p style="font-size:12.5px;color:rgba(255,255,255,.55)">Se usa cuenta Atlassian (email corporativo). Si hay SSO configurado, validar que funciona antes del go-live con pruebas reales.</p>
+        </div>
+        <div style="background:var(--surface);padding:20px 22px;border-radius:2px;border:1px solid var(--border)" class="reveal d5">
+          <h4 style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px">Backlog vs Board View</h4>
+          <p style="font-size:12.5px;color:var(--mute)">La interfaz Cloud tiene diferencias de UX con DC. El backlog, los filtros y las vistas de tablero lucen distinto. Preparar video corto o tour guiado.</p>
+        </div>
+        <div style="background:var(--surface);padding:20px 22px;border-radius:2px;border:1px solid var(--border)" class="reveal d6">
+          <h4 style="font-size:14px;font-weight:600;color:var(--ink);margin-bottom:6px">Notificaciones y @menciones</h4>
+          <p style="font-size:12.5px;color:var(--mute)">El sistema de notificaciones de Cloud es más silencioso por default. Usuarios esperan emails que ya no llegan. Revisar y ajustar Notification Scheme en Cloud.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 18 · DIVIDER — MEJORES PRÁCTICAS
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider slide-dark" data-title="Mejores Prácticas">
+  <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">BEST</div>
+  <span class="divider-num reveal">07 / Mejores Prácticas</span>
+  <h2 class="disp reveal d1" style="color:var(--white)">MEJORES<br><span style="color:var(--red)">PRÁCTICAS</span></h2>
+  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.45);margin-top:20px">
+    Lo que diferencia una migración exitosa de una que deja deuda técnica.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 19 · CHECKLIST PRE-MIGRACIÓN
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Checklist Pre-Migración" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Mejores Prácticas · Checklist</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">CHECKLIST<br>PRE-MIGRACIÓN</h2>
+
+    <div class="two-col" style="margin-top:36px;gap:32px">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);margin-bottom:12px" class="reveal d2">Datos y configuración</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px" class="reveal d3">
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Inventario completo de proyectos (activos, tamaño, último update)</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Todos los usuarios en Cloud con email verificado</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Grupos y roles mapeados DC → Cloud</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Custom fields documentados y depurados</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Workflows con condiciones Groovy identificados</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Apps del Marketplace con versión Cloud confirmada</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Automatizaciones externas (Mule, Python, etc.) documentadas</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Backup de exportación XML del sitio DC</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--mute);margin-bottom:12px" class="reveal d2">Proceso y equipo</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:8px" class="reveal d3">
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Staging Cloud configurado para pruebas de piloto</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Plan de lotes documentado con responsables</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Criterios de rollback definidos y aprobados</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Champions por área de negocio identificados</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Comunicación pre-migración enviada a usuarios</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Soporte de Atlassian notificado si hay proyectos +500K issues</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Tracker de estado por proyecto activo (Google Sheets / Jira)</li>
+          <li style="display:flex;gap:10px;font-size:13px;padding:10px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Ventana de migración acordada y comunicada</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 20 · VALIDACIÓN POST-MIGRACIÓN
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Validación Post-Go-Live" style="background:var(--surface)">
+  <div class="pad-sm">
+    <div class="tag reveal">Mejores Prácticas · Post Go-Live</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">QUÉ VALIDAR<br>INMEDIATAMENTE</h2>
+    <p class="body-md reveal d2" style="max-width:520px;margin-top:8px;margin-bottom:32px">
+      Las primeras 2 horas post-migración son críticas. Este es el orden de verificación recomendado.
+    </p>
+
+    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:0;background:var(--border)" class="reveal d3">
+      <div style="background:var(--white);padding:22px 18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--red);margin-bottom:8px">01</div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px">Acceso</div>
+        <p style="font-size:11px;color:var(--mute);line-height:1.5">Verificar que usuarios clave pueden entrar con SSO o cuenta Atlassian</p>
+      </div>
+      <div style="background:var(--bg);padding:22px 18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--red);margin-bottom:8px">02</div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px">Proyectos</div>
+        <p style="font-size:11px;color:var(--mute);line-height:1.5">Confirmar que el proyecto aparece en Cloud con el mismo nombre y key</p>
+      </div>
+      <div style="background:var(--white);padding:22px 18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--red);margin-bottom:8px">03</div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px">Issues</div>
+        <p style="font-size:11px;color:var(--mute);line-height:1.5">Conteo total de issues. Comparar con el número en DC antes de migrar</p>
+      </div>
+      <div style="background:var(--bg);padding:22px 18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--red);margin-bottom:8px">04</div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px">Boards</div>
+        <p style="font-size:11px;color:var(--mute);line-height:1.5">Todos los boards muestran issues. Filtros JQL funcionan correctamente</p>
+      </div>
+      <div style="background:var(--white);padding:22px 18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:32px;color:var(--red);margin-bottom:8px">05</div>
+        <div style="font-size:12px;font-weight:600;color:var(--ink);margin-bottom:8px">Workflows</div>
+        <p style="font-size:11px;color:var(--mute);line-height:1.5">Ejecutar transición de prueba en cada estado del workflow con el rol correcto</p>
+      </div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:0;background:var(--border);margin-top:2px" class="reveal d4">
+      <div style="background:var(--surface);padding:18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:26px;color:var(--ink);margin-bottom:6px">06</div>
+        <div style="font-size:11px;font-weight:600;color:var(--ink);margin-bottom:6px">Automatizaciones</div>
+        <p style="font-size:10.5px;color:var(--mute);line-height:1.4">Trigger manual de cada regla de automatización migrada</p>
+      </div>
+      <div style="background:var(--white);padding:18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:26px;color:var(--ink);margin-bottom:6px">07</div>
+        <div style="font-size:11px;font-weight:600;color:var(--ink);margin-bottom:6px">Integraciones</div>
+        <p style="font-size:10.5px;color:var(--mute);line-height:1.4">Mule, Python y externos confirman conexión exitosa a Cloud URL</p>
+      </div>
+      <div style="background:var(--surface);padding:18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:26px;color:var(--ink);margin-bottom:6px">08</div>
+        <div style="font-size:11px;font-weight:600;color:var(--ink);margin-bottom:6px">Permisos</div>
+        <p style="font-size:10.5px;color:var(--mute);line-height:1.4">UAT con usuario de cada rol: admin, dev, viewer, reporter</p>
+      </div>
+      <div style="background:var(--white);padding:18px;text-align:center">
+        <div style="font-family:var(--ff-disp);font-size:26px;color:var(--ink);margin-bottom:6px">09</div>
+        <div style="font-size:11px;font-weight:600;color:var(--ink);margin-bottom:6px">Notificaciones</div>
+        <p style="font-size:10.5px;color:var(--mute);line-height:1.4">Email de notificación llega correctamente al hacer cambios en issues</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 21 · CIERRE
+════════════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="Resumen Final">
+  <div style="display:grid;grid-template-columns:1fr 1fr;height:100%">
+    <div style="padding:72px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.07)">
+      <div class="tag reveal">Para recordar</div>
+      <h2 class="disp disp-lg reveal d1" style="color:var(--white);margin-top:8px">LO ESENCIAL</h2>
+      <div style="display:flex;flex-direction:column;gap:0;margin-top:32px">
+        <div class="row-item reveal d2" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content">
+            <h4 style="color:var(--white);font-size:14px">Clasifica antes de mover</h4>
+            <p style="color:rgba(255,255,255,.4);font-size:12.5px">Migra solo lo que vale la pena. El 45% puede quedar en archivo o eliminarse.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d3" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content">
+            <h4 style="color:var(--white);font-size:14px">Lotes siempre, completo nunca</h4>
+            <p style="color:rgba(255,255,255,.4);font-size:12.5px">Empezar con 50 proyectos piloto. Aprender. Escalar en lotes de 200–500.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d4" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content">
+            <h4 style="color:var(--white);font-size:14px">Audita toda automatización</h4>
+            <p style="color:rgba(255,255,255,.4);font-size:12.5px">ScriptRunner, Mule, Python, Automation. Ninguna integración se asume compatible.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d5" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content">
+            <h4 style="color:var(--white);font-size:14px">Valida con usuarios reales en staging</h4>
+            <p style="color:rgba(255,255,255,.4);font-size:12.5px">UAT con cada rol antes del go-live. Los errores de permisos aparecen en producción si no se prueban.</p>
+          </div>
+        </div>
+        <div class="row-item reveal d6" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content">
+            <h4 style="color:var(--white);font-size:14px">La optimización no termina al migrar</h4>
+            <p style="color:rgba(255,255,255,.4);font-size:12.5px">Site Optimizer, permisos, deuda técnica. El work continúa después del go-live.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="padding:72px;display:flex;flex-direction:column;justify-content:center;gap:20px">
+      <div style="font-family:var(--ff-mono);font-size:10px;color:rgba(255,255,255,.3);letter-spacing:1.5px;text-transform:uppercase" class="reveal">Métricas de referencia</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:rgba(255,255,255,.07)">
+        <div style="background:rgba(255,255,255,.04);padding:24px 20px" class="reveal d1">
+          <div style="font-family:var(--ff-disp);font-size:44px;color:var(--white)">50</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin:4px 0">proyectos</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4)">Tamaño del piloto inicial recomendado</div>
+        </div>
+        <div style="background:rgba(27,92,232,.15);padding:24px 20px" class="reveal d2">
+          <div style="font-family:var(--ff-disp);font-size:44px;color:var(--red)">72h</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin:4px 0">soporte</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4)">Equipo dedicado post go-live de cada lote</div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);padding:24px 20px" class="reveal d3">
+          <div style="font-family:var(--ff-disp);font-size:44px;color:var(--white)">500</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin:4px 0">proyectos/lote</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4)">Máximo recomendado por ventana de migración</div>
+        </div>
+        <div style="background:rgba(255,255,255,.04);padding:24px 20px" class="reveal d4">
+          <div style="font-family:var(--ff-disp);font-size:44px;color:var(--white)">100%</div>
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin:4px 0">documentado</div>
+          <div style="font-size:12px;color:rgba(255,255,255,.4)">Lo que no está documentado no existe en Cloud</div>
+        </div>
+      </div>
+      <div style="margin-top:8px;padding:18px 20px;background:rgba(27,92,232,.1);border:1px solid rgba(27,92,232,.2);border-radius:2px" class="reveal d5">
+        <p style="font-size:13px;color:rgba(255,255,255,.65);font-style:italic;line-height:1.6">"La migración no es un evento — es un proceso. El equipo que lo entiende así termina con un Cloud ordenado, seguro y adoptado."</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+
+<!-- ── NAV BAR ─────────────────────────────── -->
+<div class="nav-bar">
+  <span class="nav-counter" id="navCounter">01 / 21</span>
+  <span class="nav-title" id="navTitle">Inicio</span>
+  <div class="nav-arrows">
+    <button class="arrow-btn" id="prevBtn" aria-label="Anterior" onclick="navigate(-1)">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M8 3L4 7L8 11" stroke="#111110" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="arrow-btn" id="nextBtn" aria-label="Siguiente" onclick="navigate(1)">
+      <svg viewBox="0 0 14 14" fill="none"><path d="M6 3L10 7L6 11" stroke="#111110" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </button>
+  </div>
+</div>
+
+
+<script>
+const slides = Array.from(document.querySelectorAll('.slide'));
+const total  = slides.length;
+let   current = 0;
+let   animating = false;
+
+const progress  = document.getElementById('progress');
+const navCounter= document.getElementById('navCounter');
+const navTitle  = document.getElementById('navTitle');
+
+function updateUI() {
+  const pct = ((current + 1) / total) * 100;
+  progress.style.width = pct + '%';
+  navCounter.textContent = String(current + 1).padStart(2,'0') + ' / ' + String(total).padStart(2,'0');
+  navTitle.textContent   = slides[current].dataset.title || '';
+}
+
+function navigate(dir) {
+  if (animating) return;
+  const next = current + dir;
+  if (next < 0 || next >= total) return;
+
+  animating = true;
+  const cur  = slides[current];
+  const nxt  = slides[next];
+
+  // Determine exit/enter direction
+  const exitClass  = dir > 0 ? 'exit-left'   : 'exit-right';
+  const enterClass = dir > 0 ? 'enter-right'  : 'enter-left';
+
+  // Show next, start enter animation
+  nxt.style.opacity = '1';
+  nxt.style.pointerEvents = 'all';
+  nxt.classList.add(enterClass);
+
+  // Exit current
+  cur.classList.add(exitClass);
+
+  const DURATION = 550;
+
+  setTimeout(() => {
+    cur.classList.remove('active', exitClass);
+    cur.style.opacity = '';
+    cur.style.pointerEvents = '';
+    // Reset reveals on old slide
+    cur.querySelectorAll('.reveal').forEach(el => {
+      el.classList.remove('visible');
+    });
+
+    nxt.classList.remove(enterClass);
+    nxt.classList.add('active');
+
+    current = next;
+    updateUI();
+    animating = false;
+  }, DURATION);
+}
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ')  { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); navigate(-1); }
+});
+
+// Touch / swipe
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
+document.addEventListener('touchend',   e => {
+  const dx = e.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
+}, {passive:true});
+
+// Reveal observer
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.05 });
+
+// Trigger reveals when slide becomes active
+function triggerReveals(slideEl) {
+  slideEl.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('visible');
+  });
+}
+
+// Patch navigate to trigger reveals after transition
+const origNavigate = navigate;
+function navigate(dir) {
+  if (animating) return;
+  const next = current + dir;
+  if (next < 0 || next >= total) return;
+  animating = true;
+
+  const cur  = slides[current];
+  const nxt  = slides[next];
+  const exitClass  = dir > 0 ? 'exit-left'   : 'exit-right';
+  const enterClass = dir > 0 ? 'enter-right'  : 'enter-left';
+
+  nxt.style.opacity = '1';
+  nxt.style.pointerEvents = 'all';
+  nxt.classList.add(enterClass);
+  cur.classList.add(exitClass);
+
+  const DURATION = 520;
+
+  setTimeout(() => {
+    cur.classList.remove('active', exitClass);
+    cur.style.opacity = '';
+    cur.style.pointerEvents = '';
+    cur.querySelectorAll('.reveal').forEach(el => el.classList.remove('visible'));
+
+    nxt.classList.remove(enterClass);
+    nxt.classList.add('active');
+
+    current = next;
+    updateUI();
+
+    // Trigger reveals with slight delay for visual effect
+    setTimeout(() => triggerReveals(nxt), 60);
+
+    animating = false;
+  }, DURATION);
+}
+
+// Init first slide reveals
+setTimeout(() => triggerReveals(slides[0]), 150);
+updateUI();
+</script>
+</body>
+</html>
