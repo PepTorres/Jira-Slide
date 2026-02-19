@@ -1193,13 +1193,82 @@ headers = {
 <!-- ════════════════════════════════════════════════
      SLIDE 13 · DIVIDER — ERRORES COMUNES falta
 ════════════════════════════════════════════════ -->
-<div class="slide slide-divider" data-title="Errores Comunes" style="background:var(--ink)">
-  <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">ERR</div>
-  <span class="divider-num reveal">05 / Errores</span>
-  <h2 class="disp reveal d1" style="color:var(--white)">ERRORES<br><span style="color:var(--red)">COMUNES</span></h2>
-  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.4);margin-top:20px">
-    Documentados en campo. La mayoría son evitables con una buena preparación.
-  </p>
+<div class="slide slide-cover" data-title="Errores Comunes" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
+
+  <!-- Header -->
+  <div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">FIELD NOTES</span>
+      <span style="width:1px;height:10px;background:rgba(255,255,255,.15)"></span>
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.35)">05 / ERRORES</span>
+    </div>
+
+    <h2 class="disp reveal" style="font-size:64px;line-height:.9;color:#fff;margin:0 0 6px">ERRORES</h2>
+    <h2 class="disp reveal d1" style="font-size:64px;line-height:.9;margin:0 0 20px">
+      <span style="color:var(--red)">COMU</span><span style="color:rgba(255,255,255,.18)">NES</span>
+    </h2>
+
+    <p class="reveal d2" style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);max-width:340px">
+      Documentados en campo. La mayoría son evitables con una buena preparación.
+    </p>
+  </div>
+
+  <!-- Error rows -->
+  <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">01</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Emails duplicados o inválidos</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">Pre-migración</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Usuarios con emails duplicados en DC no pueden crearse en Cloud. Auditar y limpiar antes de ejecutar JCMA o los issues quedan sin assignee.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">02</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Links Xray rotos post-migración</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(239,68,68,.15);color:#f87171;white-space:nowrap">Pérdida permanente</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Migrar proyectos con dependencias Xray en planes separados rompe los links entre Test Plans y Tests. No tiene recuperación automática.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">03</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Automation rules silenciosamente rotas</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">Post go-live</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Reglas con acciones Groovy inline migran sin error pero no ejecutan en Cloud. Requieren revisión manual una por una tras la migración.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(27,92,232,.12);border-radius:6px;border:1px solid rgba(27,92,232,.3)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">04</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">SCIM/SSO configurado tarde ⚠</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(27,92,232,.2);color:#93c5fd;white-space:nowrap">Bloqueo total</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Para +6,000 usuarios, configurar SSO y SCIM después de migrar genera conflictos de identidad masivos. Debe estar listo antes del primer lote de usuarios.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
+    <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
+      TODOS ESTOS ERRORES SON EVITABLES — NINGUNO TIENE EXCUSA SI SE EJECUTA LA FASE 0 CORRECTAMENTE
+    </p>
+  </div>
+
 </div>
 
 
@@ -1302,13 +1371,85 @@ headers = {
 <!-- ════════════════════════════════════════════════
      SLIDE 16 · DIVIDER — USUARIOS FINALES
 ════════════════════════════════════════════════ -->
-<div class="slide slide-divider" data-title="Impacto a Usuarios" style="background:var(--bg)">
-  <div class="divider-bg-text">MIN</div>
-  <span class="divider-num reveal">06 / Usuarios</span>
-  <h2 class="disp reveal d1" style="color:var(--ink)">IMPACTO<br><span style="color:var(--red)">MÍNIMO</span><br>A USUARIOS</h2>
-  <p class="body-lg reveal d2" style="margin-top:20px;color:var(--mute)">
-    El go-live es un momento crítico. El 80% de los problemas post-migración son de adopción, no técnicos.
-  </p>
+<div class="slide slide-cover" data-title="Impacto a Usuarios" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
+
+  <!-- Header -->
+  <div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">ADOPCIÓN</span>
+      <span style="width:1px;height:10px;background:rgba(255,255,255,.15)"></span>
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.35)">06 / USUARIOS</span>
+    </div>
+
+    <h2 class="disp reveal" style="font-size:64px;line-height:.9;color:#fff;margin:0 0 6px">IMPACTO</h2>
+    <h2 class="disp reveal d1" style="font-size:64px;line-height:.9;margin:0 0 6px">
+      <span style="color:var(--red)">MÍN</span><span style="color:rgba(255,255,255,.18)">IMO</span>
+    </h2>
+    <h2 class="disp reveal d1" style="font-size:64px;line-height:.9;margin:0 0 20px">
+      <span style="color:rgba(255,255,255,.18)">A USUA</span><span style="color:#fff">RIOS</span>
+    </h2>
+
+    <p class="reveal d2" style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);max-width:340px">
+      El go-live es un momento crítico. El 80% de los problemas post-migración son de adopción, no técnicos.
+    </p>
+  </div>
+
+  <!-- Action rows -->
+  <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">01</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Comunicación anticipada</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(22,163,74,.15);color:#4ade80;white-space:nowrap">-2 semanas</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Notificar fecha, duración del downtime y qué cambia. Un usuario sorprendido genera tickets de soporte; uno preparado, no.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">02</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Login y 2FA explicados</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(22,163,74,.15);color:#4ade80;white-space:nowrap">Día 0</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">El cambio de autenticación es el punto de mayor fricción. Guía paso a paso con capturas lista antes del go-live, disponible en Confluence.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">03</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Canal de soporte dedicado</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">+48h post go-live</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Slack o Teams exclusivo para dudas de migración. Tiempo de respuesta máximo 1h durante las primeras 48 horas tras el corte.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(27,92,232,.12);border-radius:6px;border:1px solid rgba(27,92,232,.3)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">04</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Plan de rollback documentado ⚠</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(27,92,232,.2);color:#93c5fd;white-space:nowrap">Antes del corte</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Si el go-live falla, el equipo debe saber en menos de 5 minutos quién decide el rollback, cómo ejecutarlo y cuál es el criterio de activación.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
+    <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
+      LA MIGRACIÓN TÉCNICA PUEDE SER PERFECTA Y FRACASAR — EL USUARIO FINAL ES EL JUEZ DEL ÉXITO
+    </p>
+  </div>
+
 </div>
 
 
