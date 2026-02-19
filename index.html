@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Jira Cloud Migration · Para Simba</title>
+<title>Jira Cloud Migration · Guía de Equipo</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
@@ -35,6 +35,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   opacity:0;
   transition:none;
   overflow:hidden;
+  container-type:inline-size;
 }
 .slide.active{opacity:1;pointer-events:all;}
 
@@ -125,20 +126,20 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 
 /* ── TYPOGRAPHY ─────────────────────────────────── */
 .disp{font-family:var(--ff-disp);line-height:.9;letter-spacing:-.5px}
-.disp-xl{font-size:min(7.5vw,96px)}
-.disp-lg{font-size:min(6vw,84px)}
-.disp-md{font-size:min(4.5vw,60px)}
-.disp-sm{font-size:min(3.5vw,44px)}
+.disp-xl{font-size:56px}
+.disp-lg{font-size:48px}
+.disp-md{font-size:36px}
+.disp-sm{font-size:28px}
 .body-lg{font-size:15px;line-height:1.7;color:var(--mute)}
 .body-md{font-size:13.5px;line-height:1.65;color:var(--mute)}
 .mono{font-family:var(--ff-mono);font-size:11px;color:var(--mute)}
 
 /* ── LAYOUT HELPERS ─────────────────────────────── */
-.pad{padding:72px 72px 80px}
-.pad-sm{padding:52px 72px 80px}
-.two-col{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
-.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border)}
-.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border)}
+.pad{padding:40px 40px 68px;overflow:hidden}
+.pad-sm{padding:36px 40px 68px;overflow:hidden}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
+.three-col{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;background:var(--border);overflow:hidden}
+.four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);overflow:hidden}
 .col-fill{background:var(--bg)}
 
 /* ── CARDS ──────────────────────────────────────── */
@@ -214,9 +215,9 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .ph{height:100%;transition:all .3s}
 
 /* BIG number accent */
-.big-red{font-family:var(--ff-disp);font-size:140px;line-height:1;
-  color:var(--red);opacity:.12;position:absolute;right:48px;bottom:48px;letter-spacing:-4px;
-  pointer-events:none;user-select:none}
+.big-red{font-family:var(--ff-disp);font-size:100px;line-height:1;
+  color:var(--red);opacity:.12;position:absolute;right:24px;bottom:24px;letter-spacing:-4px;
+  pointer-events:none;user-select:none;overflow:hidden;max-width:50%}
 
 /* ─────────────────────────────────────────────────
    SLIDE-SPECIFIC STYLES
@@ -229,12 +230,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   height:100%;
 }
 .cover-left{
-  display:flex;flex-direction:column;justify-content:flex-end;
-  padding:72px;border-right:1px solid rgba(255,255,255,.07);
+  display:flex;flex-direction:column;justify-content:center;
+  padding:40px 48px 88px;border-right:1px solid rgba(255,255,255,.07);
 }
 .cover-right{
   display:flex;flex-direction:column;justify-content:center;
-  padding:72px;gap:20px;
+  padding:52px 48px;gap:20px;
 }
 .cover-label{
   font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;
@@ -242,7 +243,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 }
 .cover-title{
   font-family:var(--ff-disp);
-  font-size:min(11vw,148px);
+  font-size:min(13cqi, 80px);
   line-height:.85;letter-spacing:-2px;
   color:var(--white);
 }
@@ -272,9 +273,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   display:flex;
   flex-direction:column;
   justify-content:flex-end;
-  padding:56px 56px 88px 56px;
+  padding:40px 40px 72px 40px;
   position:relative;
   overflow:hidden;
+  container-type:inline-size;
 }
 .slide-divider .div-left{ display:none; }
 .slide-divider .div-right{
@@ -282,7 +284,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 }
 .slide-divider h2{
   font-family:var(--ff-disp);
-  font-size:min(9vw, 96px);
+  font-size:max(11cqi, 32px);
   line-height:.9;
   letter-spacing:-0.5px;
   word-break:break-word;
@@ -297,10 +299,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 }
 .divider-bg-text{
   position:absolute;font-family:var(--ff-disp);
-  font-size:min(18vw,160px);letter-spacing:-4px;line-height:.85;
-  color:rgba(0,0,0,.05);right:-10px;bottom:28px;white-space:nowrap;
+  font-size:max(25cqi, 72px);letter-spacing:-4px;line-height:.85;
+  color:rgba(0,0,0,.05);right:-4px;bottom:16px;white-space:nowrap;
   pointer-events:none;user-select:none;
-  max-width:65%;overflow:hidden;
+  overflow:hidden;max-width:80%;
 }
 .divider-num{
   font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;
@@ -332,7 +334,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 <div class="slide slide-cover active" data-title="Inicio">
   <div class="cover-grid">
     <div class="cover-left">
-      <div class="cover-label reveal">Guía para equipos de migración · 2026</div>
+      <div class="cover-label reveal">Guía para equipos de migración · 2025</div>
       <h1 class="cover-title reveal d1">
         JIRA<br>
         <span class="accent">CLOUD</span><br>
@@ -340,7 +342,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
       </h1>
       <div style="margin-top:28px;max-width:420px">
         <p class="cover-sub reveal d2">
-          Data Center a Cloud: Aprendizaje de una Migración Compleja
+          Todo lo que un equipo técnico necesita saber antes, durante y después de una migración de más de 6,000 proyectos a Jira Cloud.
         </p>
       </div>
       <div style="margin-top:36px;display:flex;gap:12px;flex-wrap:wrap" class="reveal d3">
@@ -369,7 +371,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 <!-- ════════════════════════════════════════════════
      SLIDE 02 · DIVIDER — PRE-MIGRACIÓN
 ════════════════════════════════════════════════ -->
-<div class="slide slide-cover active" data-title="Pre-Migración" style="background:var(--bg)">
+<div class="slide slide-divider" data-title="Pre-Migración" style="background:var(--bg)">
   <div class="divider-bg-text">PREP</div>
   <span class="divider-num reveal">01 / Pre-Migración</span>
   <h2 class="disp reveal d1" style="color:var(--ink)">QUÉ<br>CONTROLAR</h2>
@@ -516,7 +518,7 @@ GET /rest/api/3/project/search
 <!-- ════════════════════════════════════════════════
      SLIDE 05 · DIVIDER — AUTOMATIZACIONES
 ════════════════════════════════════════════════ -->
-<div class="slide slide-dark" data-title="Automatizaciones">
+<div class="slide slide-divider slide-dark" data-title="Automatizaciones">
   <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">AUTO</div>
   <span class="divider-num reveal">02 / Automatizaciones</span>
   <h2 class="disp reveal d1" style="color:var(--white)">AUDITA<br><span style="color:var(--red)">TODO</span><br>LO QUE CORRE</h2>
@@ -679,7 +681,7 @@ headers = {
 <!-- ════════════════════════════════════════════════
      SLIDE 08 · DIVIDER — ESTRATEGIA 6K
 ════════════════════════════════════════════════ -->
-<div class="slide" data-title="Estrategia 6,000 proyectos" style="background:var(--red)">
+<div class="slide slide-divider" data-title="Estrategia 6,000 proyectos" style="background:var(--red)">
   <div class="divider-bg-text" style="color:rgba(0,0,0,.08)">6K</div>
   <span class="divider-num reveal" style="color:rgba(255,255,255,.7)">03 / Escala</span>
   <h2 class="disp reveal d1" style="color:var(--white)">+6,000<br>PROYECTOS</h2>
@@ -822,7 +824,7 @@ headers = {
 <!-- ════════════════════════════════════════════════
      SLIDE 11 · DIVIDER — PLUGINS
 ════════════════════════════════════════════════ -->
-<div class="slide slide-dark" data-title="Plugins y Apps">
+<div class="slide slide-divider slide-dark" data-title="Plugins y Apps">
   <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">APPS</div>
   <span class="divider-num reveal">04 / Plugins</span>
   <h2 class="disp reveal d1" style="color:var(--white)">APPS Y<br><span style="color:var(--red)">PLUGINS</span></h2>
@@ -859,19 +861,20 @@ headers = {
             <td>ScriptRunner for Jira Cloud + Forge</td>
             <td>Reescribir scripts críticos</td>
           </tr>
+
+          <tr>
+            <td><strong>Zephyr Squad</strong></td>
+            <td>Test mgmt</td>
+            <td><span class="ok">Sí</span></td>
+            <td>Zephyr Squad Cloud (JCMA)</td>
+            <td>Instalar Cloud antes del JCMA · re-indexar post</td>
+          </tr>
           <tr>
             <td><strong>Tempo Timesheets</strong></td>
             <td>Time tracking</td>
             <td><span class="ok">Sí</span></td>
-            <td>Tempo Cloud (misma app)</td>
-            <td>Migrar configuración y datos</td>
-          </tr>
-          <tr>
-            <td><strong>Zephyr Scale</strong></td>
-            <td>Test mgmt</td>
-            <td><span class="ok">Sí</span></td>
-            <td>Zephyr Scale for Cloud</td>
-            <td>Migration path documentado</td>
+            <td>Tempo Cloud (Migration Toolkit)</td>
+            <td>Ejecutar Tempo toolkit DESPUÉS del JCMA</td>
           </tr>
           <tr>
             <td><strong>BigPicture</strong></td>
@@ -1240,6 +1243,534 @@ headers = {
     </div>
   </div>
 </div>
+
+
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 22 · DIVIDER — OKTA / SSO
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider slide-dark" data-title="Okta &amp; SSO">
+  <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">SSO</div>
+  <span class="divider-num reveal">08 / Identidad</span>
+  <h2 class="disp reveal d1" style="color:var(--white)">OKTA +<br><span style="color:var(--red)">GUARD</span></h2>
+  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.45);margin-top:20px">
+    Con 6,000+ usuarios, SCIM y SSO no son opcionales — son la base de toda la migración de identidad.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 23 · OKTA CONFIGURACIÓN Y RIESGOS
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Okta — Configuración y Riesgos" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Identidad · Okta / SCIM / Atlassian Guard</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">CONFIGURACIÓN<br>OKTA</h2>
+    <div class="two-col" style="margin-top:24px;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--white);padding:20px 22px;border:1px solid var(--border)" class="reveal d2">
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:10px">OBLIGATORIO ANTES DE MIGRAR</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:7px">
+            <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Verificar dominio en Atlassian Admin</li>
+            <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Activar Atlassian Guard (necesario para SCIM)</li>
+            <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Configurar SCIM provisioning: Okta → Atlassian</li>
+            <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Mapear grupos Okta = grupos Jira Cloud (nombres exactos)</li>
+            <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Email Okta = email exacto en Jira DC (sin mayúsculas ni espacios)</li>
+            <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Activar SSO en modo "Test" — validar con 5 usuarios piloto</li>
+          </ul>
+        </div>
+        <div style="background:var(--red-soft);padding:14px 16px;border-left:3px solid var(--red);border-radius:2px" class="reveal d3">
+          <p style="font-size:12.5px;color:var(--red);font-weight:500">🔑 Tokens de API para eazyBI, Forge y scripts externos requieren rol <strong>Org Admin</strong> en Atlassian Admin — no solo Jira Admin.</p>
+        </div>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px">
+        <div style="background:var(--dark);padding:20px 22px;border-radius:2px" class="reveal d2">
+          <div style="font-family:var(--ff-mono);font-size:10px;color:var(--red);letter-spacing:1px;margin-bottom:12px">SECUENCIA RECOMENDADA CON OKTA</div>
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="display:flex;gap:12px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:22px;padding-top:3px">01</span><p style="font-size:12.5px;color:rgba(255,255,255,.65)">Verificar dominio + activar Atlassian Guard</p></div>
+            <div style="display:flex;gap:12px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:22px;padding-top:3px">02</span><p style="font-size:12.5px;color:rgba(255,255,255,.65)">Provisionar usuarios via SCIM: Okta → Cloud</p></div>
+            <div style="display:flex;gap:12px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:22px;padding-top:3px">03</span><p style="font-size:12.5px;color:rgba(255,255,255,.65)"><strong style="color:var(--red)">Pausar SCIM sync</strong> durante ventana JCMA — evita duplicados</p></div>
+            <div style="display:flex;gap:12px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:22px;padding-top:3px">04</span><p style="font-size:12.5px;color:rgba(255,255,255,.65)">Migrar proyectos con JCMA (usuarios ya están en Cloud)</p></div>
+            <div style="display:flex;gap:12px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:22px;padding-top:3px">05</span><p style="font-size:12.5px;color:rgba(255,255,255,.65)">Reactivar SCIM + ejecutar sync final post-migración</p></div>
+            <div style="display:flex;gap:12px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:22px;padding-top:3px">06</span><p style="font-size:12.5px;color:rgba(255,255,255,.65)">Validar SSO con usuarios de distintos grupos y roles</p></div>
+          </div>
+        </div>
+        <div style="background:var(--white);padding:14px 16px;border:1px solid var(--border)" class="reveal d3">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:#F0A500;margin-bottom:8px">RIESGOS ESPECÍFICOS OKTA</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:6px">
+            <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">⚠</span> Contractors sin cuenta Okta quedan bloqueados post-migración</li>
+            <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">⚠</span> Grupos Okta con nombres distintos a DC no se mapean solos</li>
+            <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">⚠</span> SCIM activo + JCMA simultáneo = usuarios duplicados</li>
+            <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">⚠</span> Emails con mayúsculas o espacios extra rompen el mapeo</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 24 · APPS: TEMPO, STRUCTURE, EAZYBI, RICH FILTERS
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Apps: Tempo, Structure, eazyBI, Rich Filters" style="background:var(--surface)">
+  <div class="pad-sm">
+    <div class="tag reveal">Apps · Migración específica por herramienta</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">TEMPO ·<br>STRUCTURE · EAZYBI</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border);margin-top:22px">
+      <div style="background:var(--white);padding:20px 20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px" class="reveal">
+          <span style="background:#0052CC;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px">TEMPO</span>
+          <span style="font-size:12px;font-weight:600">Timesheets &amp; Planner</span>
+        </div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">!</span> Tiene su propio <strong>Migration Toolkit</strong> — no va por JCMA</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Ejecutar JCMA primero, Tempo Toolkit después</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Todos los worklogs deben estar registrados antes del corte</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Emails DC = Cloud al 100% para vincular horas</li>
+        </ul>
+        <div style="margin-top:10px;padding:10px 12px;background:var(--red-soft);border-radius:2px" class="reveal d2">
+          <p style="font-size:11px;color:var(--red)">⚠ Horas registradas en DC después del corte <strong>no se sincronizan</strong> automáticamente via Migration Toolkit.</p>
+        </div>
+      </div>
+      <div style="background:var(--bg);padding:20px 20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px" class="reveal">
+          <span style="background:#344563;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px">STRUCTURE</span>
+          <span style="font-size:12px;font-weight:600">Structure &amp; Gantt</span>
+        </div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">!</span> Usa el <strong>Structure Cloud Migration Assistant</strong></li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Instalar en DC antes del día de migración</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Al lanzar JCMA no saltar la opción "Structures"</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Validar jerarquías post-migración en Cloud</li>
+        </ul>
+        <div style="margin-top:10px;padding:10px 12px;background:var(--dark);border-radius:2px" class="reveal d2">
+          <p style="font-size:11px;color:rgba(255,255,255,.7)">💡 Sin vincular el Structure Assistant con JCMA, las jerarquías de proyectos no se incluyen en el paquete.</p>
+        </div>
+      </div>
+      <div style="background:var(--bg);padding:20px 20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px" class="reveal">
+          <span style="background:#E8440A;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px">EAZYBI</span>
+          <span style="font-size:12px;font-weight:600">Reports &amp; Analytics</span>
+        </div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">!</span> <strong>No migra vía JCMA</strong> — proceso manual</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Exportar definición de cuentas y reportes en DC</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Recrear importación de datos en Cloud post-JCMA</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Usuario importador con rol <strong>Org Admin</strong></li>
+        </ul>
+        <div style="margin-top:10px;padding:10px 12px;background:rgba(232,68,10,.08);border-radius:2px" class="reveal d2">
+          <p style="font-size:11px;color:#E8440A">⏱ Primera importación en 50+ proyectos puede tardar horas — planear al final de la jornada.</p>
+        </div>
+      </div>
+      <div style="background:var(--white);padding:20px 20px">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px" class="reveal">
+          <span style="background:#6554C0;color:white;font-size:10px;font-weight:700;padding:3px 8px;border-radius:3px">RICH FILTERS</span>
+          <span style="font-size:12px;font-weight:600">Appfire</span>
+        </div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">!</span> <strong>No migra vía JCMA</strong> — recreación manual</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">⚠</span> Tableros dependientes se verán vacíos en Cloud</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Revisar guía Appfire para exportar/importar config</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Planear recreación post-go-live — no bloquea migración</li>
+        </ul>
+        <div style="margin-top:10px;padding:10px 12px;background:rgba(101,84,192,.08);border-radius:2px" class="reveal d2">
+          <p style="font-size:11px;color:#6554C0">💡 Avisar a usuarios que sus dashboards con Rich Filters necesitan recrearse — no es pérdida de datos.</p>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:12px;padding:12px 18px;background:var(--ink);border-radius:2px;display:flex;align-items:center;gap:12px" class="reveal d3">
+      <span style="font-size:16px">🔁</span>
+      <p style="font-size:12.5px;color:rgba(255,255,255,.65)"><strong style="color:white">Orden crítico post-JCMA:</strong> 1º Structure → 2º Tempo Migration Toolkit → 3º eazyBI Full Import (background) → 4º Rich Filters (manual). Si una app falla, los datos base ya están — se reconfigura después.</p>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 25 · DIVIDER — VALIDACIÓN
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider" data-title="Validación Post-Migración" style="background:var(--bg)">
+  <div class="divider-bg-text">UAT</div>
+  <span class="divider-num reveal">09 / Validación</span>
+  <h2 class="disp reveal d1" style="color:var(--ink)">VALIDACIÓN<br><span style="color:var(--red)">ESTRUCTURAL</span></h2>
+  <p class="body-lg reveal d2" style="margin-top:20px;color:var(--mute)">
+    Proyecto, Issues, Workflow, Permisos, Boards — cada capa tiene su checklist antes de declarar éxito.
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 26 · VALIDACIÓN PROYECTO + ISSUES
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Validación: Proyecto e Issues" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Validación · Proyecto e Issues</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">PROYECTO<br>E ISSUES</h2>
+    <div class="two-col" style="margin-top:22px;gap:22px">
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin-bottom:8px" class="reveal d2">1.1 Proyecto</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px" class="reveal d3">
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Project Key correcto en Cloud</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Tipo correcto: Company-managed / Team-managed</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Categoría del proyecto es la esperada</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--white);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> URL del proyecto funciona y es accesible</li>
+        </ul>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin:12px 0 8px" class="reveal d4">1.2 Integridad de Issues</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px" class="reveal d5">
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Cantidad total coincide con DC</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Issues por tipo: Story, Bug, Task, Epic...</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Adjuntos descargan correctamente</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Historial de cambios visible</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Comentarios visibles y completos</li>
+          <li style="display:flex;gap:8px;font-size:12.5px;padding:8px 12px;background:var(--surface);border:1px solid var(--border)"><span style="color:#16A34A;font-weight:700">✓</span> Worklogs (ejecutar Tempo Toolkit después de JCMA)</li>
+        </ul>
+      </div>
+      <div>
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin-bottom:8px" class="reveal d2">Campos a verificar por issue</div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:2px;background:var(--border)" class="reveal d3">
+          <div style="background:var(--white);padding:9px 14px;font-size:12px">Summary</div>
+          <div style="background:var(--bg);padding:9px 14px;font-size:12px">Description (formato)</div>
+          <div style="background:var(--bg);padding:9px 14px;font-size:12px">Reporter</div>
+          <div style="background:var(--white);padding:9px 14px;font-size:12px">Assignee</div>
+          <div style="background:var(--white);padding:9px 14px;font-size:12px">Status</div>
+          <div style="background:var(--bg);padding:9px 14px;font-size:12px">Priority</div>
+          <div style="background:var(--bg);padding:9px 14px;font-size:12px">Labels</div>
+          <div style="background:var(--white);padding:9px 14px;font-size:12px">Componentes</div>
+          <div style="background:var(--white);padding:9px 14px;font-size:12px">Fix Versions</div>
+          <div style="background:var(--bg);padding:9px 14px;font-size:12px">Custom Fields</div>
+        </div>
+        <div style="margin-top:12px;padding:14px 16px;background:var(--red);border-radius:2px" class="reveal d4">
+          <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.6);margin-bottom:6px">Smoke test rápido</div>
+          <ul style="list-style:none;display:flex;flex-direction:column;gap:4px">
+            <li style="font-size:12px;color:rgba(255,255,255,.8);display:flex;gap:8px"><span>→</span> Crear issue con todos los campos</li>
+            <li style="font-size:12px;color:rgba(255,255,255,.8);display:flex;gap:8px"><span>→</span> Adjuntar archivo y verificar descarga</li>
+            <li style="font-size:12px;color:rgba(255,255,255,.8);display:flex;gap:8px"><span>→</span> Asignar a usuario migrado</li>
+            <li style="font-size:12px;color:rgba(255,255,255,.8);display:flex;gap:8px"><span>→</span> Transicionar por todos los estados</li>
+            <li style="font-size:12px;color:rgba(255,255,255,.8);display:flex;gap:8px"><span>→</span> Cerrar y reabrir la issue</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 27 · VALIDACIÓN WORKFLOW + PERMISOS + BOARDS
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Validación: Workflow, Permisos y Boards" style="background:var(--surface)">
+  <div class="pad-sm">
+    <div class="tag reveal">Validación · Workflow · Permisos · Boards</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">WORKFLOW,<br>PERMISOS Y BOARDS</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);margin-top:22px">
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:10px" class="reveal">Workflow</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Workflow asociado correcto</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Todos los estados existen</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Transiciones funcionan</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Post-functions se ejecutan</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Conditions respetan permisos</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Validators funcionan</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Resolución se establece al cerrar</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin estados "Unknown" o inválidos</li>
+        </ul>
+        <div style="margin-top:10px;padding:9px 12px;background:var(--surface);border-radius:2px" class="reveal d2">
+          <p style="font-size:11px;color:var(--mute)">Test: Crear → cada estado → editar en distintos estados → cerrar → reabrir</p>
+        </div>
+      </div>
+      <div style="background:var(--bg);padding:20px 18px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:10px" class="reveal">Permisos por Rol</div>
+        <div style="font-size:10px;font-weight:600;color:var(--mute);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px" class="reveal d1">Developer</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:10px" class="reveal d2">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Ver, comentar, editar, transicionar</li>
+        </ul>
+        <div style="font-size:10px;font-weight:600;color:var(--mute);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px" class="reveal d3">Viewer</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:10px" class="reveal d4">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Solo puede ver</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> No puede editar ni transicionar</li>
+        </ul>
+        <div style="font-size:10px;font-weight:600;color:var(--mute);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px" class="reveal">Automatizaciones</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:10px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Triggers funcionan, emails se envían</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin errores en audit log</li>
+        </ul>
+        <div style="font-size:10px;font-weight:600;color:var(--mute);text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px" class="reveal">Issue Security</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Niveles de seguridad existen</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Restricciones funcionan correctamente</li>
+        </ul>
+      </div>
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--red);margin-bottom:10px" class="reveal">Boards, Sprints y Filtros</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:6px;margin-bottom:10px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Board existe con columnas correctas</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Filtro JQL del board correcto</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Column mapping sin huecos</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin estados sin columna asignada</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Quick filters funcionan</li>
+        </ul>
+        <div style="height:1px;background:var(--border);margin:8px 0"></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px;margin-bottom:10px" class="reveal d2">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Sprints cerrados en historial</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Sprint activo funciona</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Burndown chart carga datos</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Issues se mueven entre sprints</li>
+        </ul>
+        <div style="height:1px;background:var(--border);margin:8px 0"></div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px" class="reveal d3">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Filtros compartidos existen y JQL funciona</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Dashboards cargan, gadgets sin error</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">!</span> Filtros privados: deben compartirse antes del corte</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 28 · VALIDACIÓN APPS + INTEGRIDAD + SMOKE TEST
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Validación Apps e Integridad" style="background:var(--bg)">
+  <div class="pad-sm">
+    <div class="tag reveal">Validación · Apps · Integridad Técnica · Smoke Test</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">APPS,<br>INTEGRIDAD Y TEST</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;background:var(--border);margin-top:22px">
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin-bottom:10px" class="reveal">Validación de Apps</div>
+        <div style="font-size:10px;font-weight:600;color:#0052CC;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px" class="reveal d1">Zephyr Squad</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:10px" class="reveal d2">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Test Cases y Cycles visibles</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Evidencias y attachments descargan</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Reportes QA sin error</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">!</span> Re-indexar proyectos en Zephyr Cloud Settings</li>
+        </ul>
+        <div style="font-size:10px;font-weight:600;color:#E8440A;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px" class="reveal d3">eazyBI</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;margin-bottom:10px" class="reveal d4">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Conexión a Jira Cloud estable</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Cubos, medidas y dimensiones visibles</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Full re-import ejecutado — reportes OK</li>
+        </ul>
+        <div style="font-size:10px;font-weight:600;color:#6554C0;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px" class="reveal d5">Rich Filters</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:4px" class="reveal d6">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">✓</span> Smart Filters y Calculated Metrics OK</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#F0A500">!</span> Recrear manualmente (no migra por JCMA)</li>
+        </ul>
+      </div>
+      <div style="background:var(--surface);padding:20px 18px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin-bottom:10px" class="reveal">Integridad Técnica</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:7px" class="reveal d1">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin errores en Migration Assistant report</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin issues huérfanas sin proyecto</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin estados no mapeados en workflows</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin custom fields sin contexto de proyecto</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin warnings activos en Project settings</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin errores "Duplicate Name" sin resolver</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:var(--red)">✗</span> Sin errores en Automation audit log</li>
+        </ul>
+        <div style="margin-top:10px;padding:10px 12px;background:var(--red-soft);border-radius:2px" class="reveal d2">
+          <p style="font-size:11px;color:var(--red)"><strong>Filtros privados:</strong> No migran por defecto. Pedir a usuarios compartirlos con grupo/proyecto antes del corte.</p>
+        </div>
+      </div>
+      <div style="background:var(--white);padding:20px 18px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin-bottom:10px" class="reveal">Mini Smoke Test Final</div>
+        <div style="display:flex;flex-direction:column;gap:6px" class="reveal d1">
+          <div style="display:flex;gap:10px;padding:8px 12px;background:var(--dark);border-radius:2px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:16px">01</span><p style="font-size:12px;color:rgba(255,255,255,.7)">Crear issue con todos los campos</p></div>
+          <div style="display:flex;gap:10px;padding:8px 12px;background:var(--dark);border-radius:2px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:16px">02</span><p style="font-size:12px;color:rgba(255,255,255,.7)">Adjuntar archivo y verificar descarga</p></div>
+          <div style="display:flex;gap:10px;padding:8px 12px;background:var(--dark);border-radius:2px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:16px">03</span><p style="font-size:12px;color:rgba(255,255,255,.7)">Transicionar por todo el workflow</p></div>
+          <div style="display:flex;gap:10px;padding:8px 12px;background:var(--dark);border-radius:2px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:16px">04</span><p style="font-size:12px;color:rgba(255,255,255,.7)">Ver reporte en eazyBI con datos del proyecto</p></div>
+          <div style="display:flex;gap:10px;padding:8px 12px;background:var(--dark);border-radius:2px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:16px">05</span><p style="font-size:12px;color:rgba(255,255,255,.7)">Visualizar en Rich Filter dashboard</p></div>
+          <div style="display:flex;gap:10px;padding:8px 12px;background:var(--dark);border-radius:2px"><span style="font-family:var(--ff-mono);font-size:10px;color:var(--red);min-width:16px">06</span><p style="font-size:12px;color:rgba(255,255,255,.7)">Login SSO Okta y acceso con rol correcto</p></div>
+        </div>
+        <div style="margin-top:10px;padding:10px 12px;background:rgba(22,163,74,.1);border-left:3px solid #16A34A;border-radius:2px" class="reveal d2">
+          <p style="font-size:12.5px;color:#16A34A;font-weight:600">✓ Si todos los pasos pasan — estamos operativos.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 29 · DIVIDER — RUNBOOK
+════════════════════════════════════════════════ -->
+<div class="slide slide-divider" data-title="Runbook" style="background:var(--red)">
+  <div class="divider-bg-text" style="color:rgba(0,0,0,.08)">RUN</div>
+  <span class="divider-num reveal" style="color:rgba(255,255,255,.7)">10 / Runbook</span>
+  <h2 class="disp reveal d1" style="color:var(--white)">RUNBOOK<br>DÍA DE<br>MIGRACIÓN</h2>
+  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.65);margin-top:20px">
+    DevSecOps · Ventana 19:00–23:30 · 300–400 usuarios
+  </p>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 30 · RUNBOOK FASES I + II
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Runbook — Ejecución" style="background:var(--ink)">
+  <div style="padding:32px 44px 72px;height:100%;overflow:hidden">
+    <div class="tag reveal" style="color:var(--red)">Runbook · Día de Migración</div>
+    <h2 class="disp disp-sm reveal d1" style="color:var(--white);margin-bottom:14px">FASE I + II · EJECUCIÓN</h2>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px" class="reveal d2">
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:2px;padding:14px 16px">
+        <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:10px">Fase I · Pre-Migración (09:00–19:30)</div>
+        <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:10px;color:rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:4px;margin-bottom:6px">
+          <span>Hora</span><span>Acción</span><span>Resp.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">09:00</span><span>Publicar Banner DC — "Mantenimiento a las 7PM"</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">09:00</span><span>Ticket en Atlassian Support (aviso migración masiva)</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">18:30</span><span>Último sync AD/LDAP + verificar usuarios en Cloud</span><span style="color:rgba(255,255,255,.35)">Infra</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">18:45</span><span>Pausar SCIM sync en Okta durante ventana JCMA</span><span style="color:rgba(255,255,255,.35)">Infra</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">19:00</span><span>Bloqueo DC — Read-Only / cambio de esquemas</span><span style="color:rgba(255,255,255,.35)">Infra</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">19:15</span><span>Backup Full — DB + Data Directory</span><span style="color:rgba(255,255,255,.35)">Cloud</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">19:30</span><span>Re-index Jira DC + confirmar JCMA última versión</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+        </div>
+      </div>
+      <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:2px;padding:14px 16px">
+        <div style="font-family:var(--ff-mono);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--red);margin-bottom:10px">Fase II · JCMA + Apps (20:00–23:30)</div>
+        <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:10px;color:rgba(255,255,255,.35);border-bottom:1px solid rgba(255,255,255,.07);padding-bottom:4px;margin-bottom:6px">
+          <span>Hora</span><span>Acción</span><span>Resp.</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:5px">
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">20:00</span><span>Lanzar JCMA — iniciar plan de migración</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">20:00+</span><span>Monitorear Progress — attachments lentos = normal</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">ongoing</span><span>Anotar errores "Duplicate Name" en log</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">22:30</span><span>JCMA completado → inicio UAT (Equipo TI)</span><span style="color:rgba(255,255,255,.35)">TI</span></div>
+          <div style="height:1px;background:rgba(255,255,255,.07);margin:3px 0"></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">22:45</span><span>Ejecutar Tempo Migration Toolkit</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">23:00</span><span>Validar Structure + reactivar SCIM Okta</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">23:15</span><span>Lanzar eazyBI Full Re-import (corre en background)</span><span style="color:rgba(255,255,255,.35)">Admin</span></div>
+          <div style="display:grid;grid-template-columns:46px 1fr 68px;gap:6px;font-size:11px;color:rgba(255,255,255,.8)"><span style="color:var(--red)">23:30</span><span>Notificar URL atlassian.net · retirar banner DC</span><span style="color:rgba(255,255,255,.35)">Comm.</span></div>
+        </div>
+      </div>
+    </div>
+    <div style="margin-top:10px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px" class="reveal d3">
+      <div style="padding:10px 14px;background:rgba(255,255,255,.04);border-radius:2px;border:1px solid rgba(255,255,255,.07)">
+        <div style="font-size:10px;color:rgba(255,255,255,.3);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Trigger Rollback</div>
+        <p style="font-size:11px;color:rgba(255,255,255,.5)">Si JCMA falla en +20% de proyectos o dato crítico no llega → reactivar DC, notificar, escalar ticket PA.</p>
+      </div>
+      <div style="padding:10px 14px;background:rgba(255,255,255,.04);border-radius:2px;border:1px solid rgba(255,255,255,.07)">
+        <div style="font-size:10px;color:rgba(255,255,255,.3);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Attachments Lentos</div>
+        <p style="font-size:11px;color:rgba(255,255,255,.5)">Normal que tarden. No reiniciar sin revisar log — un restart duplica issues migradas.</p>
+      </div>
+      <div style="padding:10px 14px;background:rgba(255,255,255,.04);border-radius:2px;border:1px solid rgba(255,255,255,.07)">
+        <div style="font-size:10px;color:rgba(255,255,255,.3);font-weight:700;letter-spacing:.8px;text-transform:uppercase;margin-bottom:4px">Soporte Atlassian</div>
+        <p style="font-size:11px;color:rgba(255,255,255,.5)">Ticket PA abierto desde 09:00. Si hay bloqueo crítico: escalar directamente a ese ticket como urgente.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 31 · RUNBOOK — UAT Y CIERRE
+════════════════════════════════════════════════ -->
+<div class="slide" data-title="Runbook — UAT y Cierre" style="background:var(--surface)">
+  <div class="pad-sm">
+    <div class="tag reveal">Runbook · Validación UAT · Cierre</div>
+    <h2 class="disp disp-md reveal d1" style="color:var(--ink)">UAT +<br>CIERRE</h2>
+    <p style="font-size:13px;color:var(--mute);margin-top:4px;margin-bottom:14px" class="reveal d2">Pruebas antes de dar el "Go" definitivo y apagar el entorno DC.</p>
+    <div style="overflow:auto" class="reveal d3">
+      <table class="tbl">
+        <thead>
+          <tr>
+            <th style="width:28px">☐</th>
+            <th>Categoría</th>
+            <th>Prueba de validación</th>
+            <th>Resultado esperado</th>
+            <th style="width:60px">Resp.</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>☐</td><td><strong>Acceso</strong></td><td>Login SSO (Okta / AD)</td><td>Usuario entra con credenciales actuales sin fricción</td><td style="color:var(--mute)">TI</td></tr>
+          <tr><td>☐</td><td><strong>Permisos</strong></td><td>Verificar rol Admin y User en proyecto piloto</td><td>Permisos según grupos de Jira DC</td><td style="color:var(--mute)">TI</td></tr>
+          <tr><td>☐</td><td><strong>Datos</strong></td><td>Conteo de issues por proyecto (5 proyectos piloto)</td><td>Número Cloud = número DC exacto</td><td style="color:var(--mute)">Admin</td></tr>
+          <tr><td>☐</td><td><strong>Adjuntos</strong></td><td>Abrir archivo adjunto aleatorio en 3 proyectos</td><td>Se visualiza y descarga correctamente</td><td style="color:var(--mute)">TI</td></tr>
+          <tr><td>☐</td><td><strong>Avatar</strong></td><td>Visualización de perfiles de usuarios</td><td>Imágenes de perfil migradas correctamente</td><td style="color:var(--mute)">TI</td></tr>
+          <tr><td>☐</td><td><strong>Workflow</strong></td><td>Transicionar issue por todos los estados</td><td>Sin errores, resolución se establece al cerrar</td><td style="color:var(--mute)">QA</td></tr>
+          <tr><td>☐</td><td><strong>Board</strong></td><td>Board con issues y columnas correctas</td><td>Issues visibles, JQL del filtro correcto</td><td style="color:var(--mute)">QA</td></tr>
+          <tr><td>☐</td><td><strong>Integraciones</strong></td><td>Revisar enlaces a Confluence / Slack / pipelines</td><td>Links entre herramientas siguen funcionando</td><td style="color:var(--mute)">TI</td></tr>
+          <tr><td>☐</td><td><strong>Automation</strong></td><td>Trigger manual de regla de automatización crítica</td><td>Ejecuta correctamente, sin errores en audit log</td><td style="color:var(--mute)">Admin</td></tr>
+          <tr><td>☐</td><td><strong>eazyBI</strong></td><td>Cargar reporte en eazyBI Cloud con datos migrados</td><td>Datos importados correctamente, reporte sin error</td><td style="color:var(--mute)">Admin</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div style="margin-top:12px;display:grid;grid-template-columns:1fr 1fr;gap:12px" class="reveal d4">
+      <div style="padding:14px 16px;background:var(--white);border:1px solid var(--border);border-radius:2px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin-bottom:8px">Cierre y comunicación</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px">
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">☐</span> Notificar nueva URL .atlassian.net a todos los usuarios</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">☐</span> Retirar banner de mantenimiento en DC y Cloud</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">☐</span> Activar canal de soporte 72h — equipo dedicado</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">☐</span> Actualizar bookmarks, integraciones y documentación</li>
+          <li style="display:flex;gap:8px;font-size:12px"><span style="color:#16A34A">☐</span> Publicar FAQ con los primeros problemas detectados</li>
+        </ul>
+      </div>
+      <div style="padding:14px 16px;background:var(--dark);border-radius:2px">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px">Tips del día siguiente</div>
+        <ul style="list-style:none;display:flex;flex-direction:column;gap:5px">
+          <li style="display:flex;gap:8px;font-size:12px;color:rgba(255,255,255,.6)"><span style="color:var(--red)">→</span> Verificar que eazyBI Full Import terminó correctamente</li>
+          <li style="display:flex;gap:8px;font-size:12px;color:rgba(255,255,255,.6)"><span style="color:var(--red)">→</span> Corregir errores "Duplicate Name" de workflows</li>
+          <li style="display:flex;gap:8px;font-size:12px;color:rgba(255,255,255,.6)"><span style="color:var(--red)">→</span> Recrear Rich Filters con guía Appfire</li>
+          <li style="display:flex;gap:8px;font-size:12px;color:rgba(255,255,255,.6)"><span style="color:var(--red)">→</span> Ejecutar Site Optimizer para limpiar configuraciones</li>
+          <li style="display:flex;gap:8px;font-size:12px;color:rgba(255,255,255,.6)"><span style="color:var(--red)">→</span> Reconfigurar ZBot en Zephyr Cloud Settings si aplica</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ════════════════════════════════════════════════
+     SLIDE 32 · LECCIONES APRENDIDAS
+════════════════════════════════════════════════ -->
+<div class="slide slide-dark" data-title="Lecciones Aprendidas" style="background:var(--ink)">
+  <div class="two-col" style="height:100%">
+    <div style="padding:48px 44px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.07)">
+      <div class="tag reveal" style="color:var(--red)">Post-mortem · SaithFlow</div>
+      <h2 class="disp disp-md reveal d1" style="color:var(--white);margin-top:8px">LO QUE<br>APRENDIMOS</h2>
+      <div style="display:flex;flex-direction:column;gap:0;margin-top:20px">
+        <div class="row-item reveal d2" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content"><h4 style="color:var(--white);font-size:13px">Validación exhaustiva, no solo happy path</h4><p style="color:rgba(255,255,255,.4);font-size:12px">Probar cada automatización en escenarios complejos, casos edge y posibles fallos antes del go-live.</p></div>
+        </div>
+        <div class="row-item reveal d3" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content"><h4 style="color:var(--white);font-size:13px">Honestidad sobre el impacto</h4><p style="color:rgba(255,255,255,.4);font-size:12px">Los cambios de infraestructura afectan operaciones. Lo importante es gestionarlo con transparencia y velocidad.</p></div>
+        </div>
+        <div class="row-item reveal d4" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content"><h4 style="color:var(--white);font-size:13px">Conocer profundamente los procesos</h4><p style="color:rgba(255,255,255,.4);font-size:12px">El expertise técnico combinado con entender cómo trabaja el equipo fue clave para convertir la complejidad en soluciones.</p></div>
+        </div>
+        <div class="row-item reveal d5" style="border-color:rgba(255,255,255,.07)">
+          <span class="row-num" style="color:var(--red)">—</span>
+          <div class="row-content"><h4 style="color:var(--white);font-size:13px">El cliente al centro</h4><p style="color:rgba(255,255,255,.4);font-size:12px">Issues post-migración son esperables. La responsabilidad es responder rápido y con empatía.</p></div>
+        </div>
+      </div>
+    </div>
+    <div style="padding:48px 44px;display:flex;flex-direction:column;justify-content:center;gap:14px">
+      <div style="font-family:var(--ff-mono);font-size:10px;color:rgba(255,255,255,.3);letter-spacing:1.5px;text-transform:uppercase" class="reveal">Lo haría diferente</div>
+      <div style="display:flex;flex-direction:column;gap:7px" class="reveal d1">
+        <div style="padding:11px 14px;background:rgba(255,255,255,.04);border-radius:2px;display:flex;gap:10px"><span style="color:var(--red);font-size:12px;padding-top:1px">→</span><p style="font-size:12.5px;color:rgba(255,255,255,.6)">Extender el periodo de pruebas en sandbox</p></div>
+        <div style="padding:11px 14px;background:rgba(255,255,255,.04);border-radius:2px;display:flex;gap:10px"><span style="color:var(--red);font-size:12px;padding-top:1px">→</span><p style="font-size:12.5px;color:rgba(255,255,255,.6)">Involucrar usuarios clave desde etapas más tempranas</p></div>
+        <div style="padding:11px 14px;background:rgba(255,255,255,.04);border-radius:2px;display:flex;gap:10px"><span style="color:var(--red);font-size:12px;padding-top:1px">→</span><p style="font-size:12.5px;color:rgba(255,255,255,.6)">Matriz de compatibilidad de plugins más detallada desde el inicio</p></div>
+        <div style="padding:11px 14px;background:rgba(255,255,255,.04);border-radius:2px;display:flex;gap:10px"><span style="color:var(--red);font-size:12px;padding-top:1px">→</span><p style="font-size:12.5px;color:rgba(255,255,255,.6)">Más checkpoints de validación y comunicación frecuente</p></div>
+      </div>
+      <div style="padding:12px 14px;background:rgba(27,92,232,.12);border:1px solid rgba(27,92,232,.25);border-radius:2px" class="reveal d2">
+        <p style="font-size:12px;color:rgba(255,255,255,.65);font-style:italic;line-height:1.6">"Los problemas técnicos son parte del proceso. Lo que marca la diferencia es cómo los enfrentamos: con transparencia, velocidad y enfoque en el usuario final."</p>
+      </div>
+      <div style="padding:12px 14px;background:rgba(255,255,255,.04);border-radius:2px" class="reveal d3">
+        <div style="font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:6px">Oportunidades Cloud-Native</div>
+        <p style="font-size:12px;color:rgba(255,255,255,.5);line-height:1.7">Atlassian Intelligence · Rovo · APIs Cloud robustas · Forge en evolución · Actualizaciones automáticas</p>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <!-- ════════════════════════════════════════════════
