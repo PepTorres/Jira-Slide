@@ -1920,13 +1920,82 @@ headers = {
 <!-- ════════════════════════════════════════════════
      SLIDE 24 · DIVIDER — VALIDACIÓN
 ════════════════════════════════════════════════ -->
-<div class="slide slide-divider" data-title="Validación Post-Migración" style="background:var(--bg)">
-  <div class="divider-bg-text">UAT</div>
-  <span class="divider-num reveal">09 / Validación</span>
-  <h2 class="disp reveal d1" style="color:var(--ink)">VALIDACIÓN<br><span style="color:var(--red)">ESTRUCTURAL</span></h2>
-  <p class="body-lg reveal d2" style="margin-top:20px;color:var(--mute)">
-    Proyecto, Issues, Workflow, Permisos, Boards — cada capa tiene su checklist antes de declarar éxito.
-  </p>
+<div class="slide slide-cover" data-title="Validación Post-Migración" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
+
+  <!-- Header -->
+  <div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">UAT</span>
+      <span style="width:1px;height:10px;background:rgba(255,255,255,.15)"></span>
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.35)">09 / VALIDACIÓN</span>
+    </div>
+
+    <h2 class="disp reveal" style="font-size:64px;line-height:.9;color:#fff;margin:0 0 6px">VALIDACIÓN</h2>
+    <h2 class="disp reveal d1" style="font-size:64px;line-height:.9;margin:0 0 20px">
+      <span style="color:var(--red)">ESTRU</span><span style="color:rgba(255,255,255,.18)">CTURAL</span>
+    </h2>
+
+    <p class="reveal d2" style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);max-width:340px">
+      Proyecto, Issues, Workflow, Permisos, Boards — cada capa tiene su checklist antes de declarar éxito.
+    </p>
+  </div>
+
+  <!-- Validation rows -->
+  <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">01</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Proyecto e Issues</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(22,163,74,.15);color:#4ade80;white-space:nowrap">Capa base</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Verificar conteo total de issues, campos personalizados con datos intactos, attachments accesibles y historial de cambios completo sin gaps.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">02</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Workflows y transiciones</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">Probar manualmente</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Ejecutar cada transición con el rol correcto. Post-functions y conditions reescritas en Forge deben probarse en escenario real, no solo en sandbox.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">03</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Permisos y Boards</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">Validar por rol</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Comprobar esquemas de permisos con usuario de cada grupo clave. Boards deben mostrar el backlog correcto y filtros activos sin errores de JQL.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(27,92,232,.12);border-radius:6px;border:1px solid rgba(27,92,232,.3)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">04</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Plugins: Xray + Zephyr ⚠</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(27,92,232,.2);color:#93c5fd;white-space:nowrap">No asumir — verificar</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Confirmar que Test Plans retienen todos los Tests de proyectos distintos, ejecuciones con historial intacto, y re-indexar desde Zephyr Cloud settings antes de liberar a usuarios.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
+    <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
+      NO DECLARAR ÉXITO HASTA QUE CADA CAPA ESTÉ VALIDADA POR UN USUARIO REAL CON SU ROL REAL
+    </p>
+  </div>
+
 </div>
 
 
