@@ -1523,13 +1523,82 @@ headers = {
 <!-- ════════════════════════════════════════════════
      SLIDE 18 · DIVIDER — MEJORES PRÁCTICAS
 ════════════════════════════════════════════════ -->
-<div class="slide slide-divider slide-dark" data-title="Mejores Prácticas">
-  <div class="divider-bg-text" style="color:rgba(255,255,255,.04)">BEST</div>
-  <span class="divider-num reveal">07 / Mejores Prácticas</span>
-  <h2 class="disp reveal d1" style="color:var(--white)">MEJORES<br><span style="color:var(--red)">PRÁCTICAS</span></h2>
-  <p class="body-lg reveal d2" style="color:rgba(255,255,255,.45);margin-top:20px">
-    Lo que diferencia una migración exitosa de una que deja deuda técnica.
-  </p>
+<div class="slide slide-cover" data-title="Mejores Prácticas" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
+
+  <!-- Header -->
+  <div>
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">BEST PRACTICES</span>
+      <span style="width:1px;height:10px;background:rgba(255,255,255,.15)"></span>
+      <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:rgba(255,255,255,.35)">07 / MEJORES PRÁCTICAS</span>
+    </div>
+
+    <h2 class="disp reveal" style="font-size:64px;line-height:.9;color:#fff;margin:0 0 6px">MEJORES</h2>
+    <h2 class="disp reveal d1" style="font-size:64px;line-height:.9;margin:0 0 20px">
+      <span style="color:var(--red)">PRÁC</span><span style="color:rgba(255,255,255,.18)">TICAS</span>
+    </h2>
+
+    <p class="reveal d2" style="font-size:13px;line-height:1.7;color:rgba(255,255,255,.45);max-width:340px">
+      Lo que diferencia una migración exitosa de una que deja deuda técnica.
+    </p>
+  </div>
+
+  <!-- Practice rows -->
+  <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">01</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Piloto antes de escalar</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(22,163,74,.15);color:#4ade80;white-space:nowrap">Fase obligatoria</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Empezar con 50 proyectos representativos — un cluster Xray pequeño, un proyecto con ScriptRunner, uno con Automation. Validar todo antes del primer lote real.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">02</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Lotes de 200–500 proyectos</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(22,163,74,.15);color:#4ade80;white-space:nowrap">Ritmo sostenible</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Nunca migrar todo de una vez. Lotes controlados permiten detectar errores antes de que afecten a miles de proyectos y usuarios.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">03</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Tracker externo por proyecto</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(240,165,0,.15);color:#fbbf24;white-space:nowrap">Control continuo</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">Google Sheets o Jira propio con estado de cada proyecto: pendiente, en lote, migrado, validado, con incidencias. Imprescindible para +2,000 proyectos.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(27,92,232,.12);border-radius:6px;border:1px solid rgba(27,92,232,.3)">
+      <span style="font-family:var(--ff-mono);font-size:11px;color:var(--red);min-width:20px;padding-top:1px">04</span>
+      <div style="flex:1">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+          <p style="margin:0;font-size:13px;font-weight:600;color:#fff">Involucrar a Atlassian desde el inicio ⚠</p>
+          <span style="font-family:var(--ff-mono);font-size:9px;padding:2px 7px;border-radius:3px;background:rgba(27,92,232,.2);color:#93c5fd;white-space:nowrap">Recurso gratuito</span>
+        </div>
+        <p style="margin:3px 0 0;font-size:11.5px;color:rgba(255,255,255,.4);line-height:1.5">El Cloud Migration Manager (CMM) es gratuito para contratos que lo incluyen. Aporta acceso directo a ingeniería de Atlassian cuando algo se rompe a escala.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Footer -->
+  <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
+    <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
+      UNA MIGRACIÓN SIN DEUDA TÉCNICA NO ES MÁS LENTA — ES MÁS METÓDICA
+    </p>
+  </div>
+
 </div>
 
 
