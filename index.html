@@ -19,15 +19,11 @@
   --ff-mono:'DM Mono',monospace;
 }
 html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
-
-/* ── DECK CONTAINER ─────────────────────────────── */
 .deck{
   position:fixed;inset:0;
   display:flex;align-items:center;justify-content:center;
   background:var(--bg);
-}
-
-/* ── SLIDE ──────────────────────────────────────── */
+} 
 .slide{
   position:absolute;inset:0;
   display:flex;flex-direction:column;
@@ -38,9 +34,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   container-type:inline-size;
 }
 .slide.active{opacity:1;pointer-events:all;}
-
-/* ── TRANSITIONS ────────────────────────────────── */
-/* Slide entering from right */
 .slide.enter-right{
   animation:slideInRight .55s cubic-bezier(.22,.68,0,1.2) forwards;
 }
@@ -48,7 +41,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   from{transform:translateX(100%);opacity:0}
   to{transform:translateX(0);opacity:1}
 }
-/* Slide entering from left */
+
 .slide.enter-left{
   animation:slideInLeft .55s cubic-bezier(.22,.68,0,1.2) forwards;
 }
@@ -56,7 +49,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   from{transform:translateX(-100%);opacity:0}
   to{transform:translateX(0);opacity:1}
 }
-/* Slide exiting to left */
+
 .slide.exit-left{
   animation:slideOutLeft .45s cubic-bezier(.22,.68,0,.9) forwards;
 }
@@ -64,7 +57,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   from{transform:translateX(0);opacity:1}
   to{transform:translateX(-100%);opacity:0}
 }
-/* Slide exiting to right */
+
 .slide.exit-right{
   animation:slideOutRight .45s cubic-bezier(.22,.68,0,.9) forwards;
 }
@@ -73,14 +66,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   to{transform:translateX(100%);opacity:0}
 }
 
-/* Staggered content reveal */
+
 .reveal{opacity:0;transform:translateY(22px);transition:opacity .5s ease,transform .5s ease}
 .active .reveal{opacity:1;transform:translateY(0)}
 .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}
 .d4{transition-delay:.32s}.d5{transition-delay:.40s}.d6{transition-delay:.48s}
 .d7{transition-delay:.56s}.d8{transition-delay:.64s}
-
-/* ── NAV BAR ────────────────────────────────────── */
 .nav-bar{
   position:fixed;bottom:0;left:0;right:0;z-index:200;
   display:flex;align-items:center;justify-content:space-between;
@@ -109,14 +100,12 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .arrow-btn:active{transform:scale(.93);}
 .arrow-btn svg{width:14px;height:14px;}
 
-/* Progress bar */
+
 .progress-bar{
   position:fixed;top:0;left:0;height:2px;
   background:var(--red);z-index:200;
   transition:width .4s ease;
 }
-
-/* ── SECTION TAG ────────────────────────────────── */
 .tag{
   display:inline-flex;align-items:center;gap:8px;
   font-size:10px;font-weight:600;letter-spacing:1.2px;text-transform:uppercase;
@@ -124,7 +113,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 }
 .tag::before{content:'';width:18px;height:2px;background:var(--red);border-radius:2px;}
 
-/* ── TYPOGRAPHY ─────────────────────────────────── */
 .disp{font-family:var(--ff-disp);line-height:.9;letter-spacing:-.5px}
 .disp-xl{font-size:56px}
 .disp-lg{font-size:48px}
@@ -134,7 +122,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .body-md{font-size:13.5px;line-height:1.65;color:var(--mute)}
 .mono{font-family:var(--ff-mono);font-size:11px;color:var(--mute)}
 
-/* ── LAYOUT HELPERS ─────────────────────────────── */
+
 .pad{padding:40px 40px 68px;overflow:hidden}
 .pad-sm{padding:36px 40px 68px;overflow:hidden}
 .two-col{display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:start}
@@ -142,7 +130,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .four-col{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;background:var(--border);overflow:hidden}
 .col-fill{background:var(--bg)}
 
-/* ── CARDS ──────────────────────────────────────── */
 .card{
   background:var(--white);padding:28px 28px;
   border:1px solid var(--border);border-radius:2px;
@@ -150,8 +137,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .card-dark{background:var(--dark);color:var(--white);}
 .card-red{background:var(--red);color:var(--white);}
 .card-surface{background:var(--surface);}
-
-/* ── CHIP / BADGE ───────────────────────────────── */
 .chip{
   display:inline-flex;align-items:center;
   font-size:11px;font-weight:500;letter-spacing:.3px;
@@ -161,7 +146,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .chip-red{background:var(--red-soft);color:var(--red);border-color:rgba(27,92,232,.2)}
 .chip-dark{background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);border-color:transparent}
 
-/* ── LIST ───────────────────────────────────────── */
 .clean-list{list-style:none;display:flex;flex-direction:column;gap:10px}
 .clean-list li{
   display:flex;align-items:flex-start;gap:12px;
@@ -171,17 +155,13 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .clean-list.white li{color:rgba(255,255,255,.65)}
 .clean-list.white li::before{color:rgba(255,255,255,.4)}
 
-/* Warning list */
 .warn-list li::before{content:'⚠';color:#F0A500;font-size:11px;padding-top:2px}
 
-/* ── STAT BLOCK ─────────────────────────────────── */
 .stat-block{padding:28px 24px;}
 .stat-n{font-family:var(--ff-disp);font-size:52px;line-height:1;letter-spacing:-1px}
 .stat-u{color:var(--red);font-size:36px}
 .stat-tag{font-size:10px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--mute);margin:4px 0 8px}
 .stat-desc{font-size:12px;color:var(--mute);line-height:1.5}
-
-/* ── ROW ITEM (numbered) ────────────────────────── */
 .row-item{
   display:flex;align-items:flex-start;gap:20px;
   padding:18px 0;border-bottom:1px solid var(--border);
@@ -191,7 +171,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .row-content h4{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:4px}
 .row-content p{font-size:13px;color:var(--mute);line-height:1.55}
 
-/* Code block */
 .code{
   font-family:var(--ff-mono);font-size:11.5px;
   background:var(--dark);color:#A8E6CF;
@@ -200,8 +179,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 }
 .code .cm{color:#5C6370}.code .kw{color:#61AFEF}.code .str{color:#98C379}
 .code .fn{color:#61AFEF}
-
-/* Table */
 .tbl{width:100%;border-collapse:collapse;font-size:12.5px}
 .tbl th{font-size:10px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;
   color:var(--mute);padding:10px 14px;border-bottom:1px solid var(--border);text-align:left}
@@ -209,21 +186,11 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 .tbl tr:last-child td{border-bottom:none}
 .tbl tr:hover td{background:var(--surface)}
 .ok{color:#16A34A;font-weight:600}.warn{color:#F0A500;font-weight:600}.bad{color:var(--red);font-weight:600}
-
-/* Phase bar */
 .phase-bar{display:flex;gap:0;height:6px;border-radius:3px;overflow:hidden;margin-top:8px}
 .ph{height:100%;transition:all .3s}
-
-/* BIG number accent */
 .big-red{font-family:var(--ff-disp);font-size:100px;line-height:1;
   color:var(--red);opacity:.12;position:absolute;right:24px;bottom:24px;letter-spacing:-4px;
   pointer-events:none;user-select:none;overflow:hidden;max-width:50%}
-
-/* ─────────────────────────────────────────────────
-   SLIDE-SPECIFIC STYLES
-───────────────────────────────────────────────── */
-
-/* COVER */
 .slide-cover{background:var(--ink);}
 .cover-grid{
   display:grid;grid-template-columns:1fr 1fr;
@@ -268,7 +235,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   background:rgba(27,92,232,.15);padding:2px 7px;border-radius:3px;
 }
 
-/* SECTION DIVIDER */
 .slide-divider{
   display:flex;
   flex-direction:column;
@@ -313,12 +279,10 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   display:none;
 }
 
-/* DARK SLIDE */
 .slide-dark{background:var(--dark)}
 .slide-dark .tag::before{background:var(--red)}
 .slide-dark .tag{color:var(--red)}
 
-/* RED ACCENT slide */
 .slide-red{background:var(--red)}
 </style>
 </head>
@@ -327,10 +291,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 <div class="progress-bar" id="progress"></div>
 
 <div class="deck" id="deck">
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 01 · COVER
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover active" data-title="Inicio">
   <div class="cover-grid">
     <div class="cover-left">
@@ -366,14 +326,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
     </div>
   </div>
 </div>
-
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 02 · DIVIDER — PRE-MIGRACIÓN 
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Pre-Migración" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
-
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">PREP</span>
@@ -390,8 +343,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
       Antes de ejecutar cualquier migración, el equipo debe tener visibilidad total del estado actual del sitio.
     </p>
   </div>
-
-  <!-- Checklist Grid -->
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -428,7 +379,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
 
   </div>
 
-  <!-- Footer warning -->
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       NO AVANZAR A JCMA HASTA VALIDAR TODOS LOS ÍTEMS CON EL EQUIPO TÉCNICO
@@ -436,9 +386,7 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   </div>
 
 </div>
-<!-- ════════════════════════════════════════════════
-     SLIDE 03 · INVENTARIO BASE
-════════════════════════════════════════════════ -->
+
 <div class="slide" data-title="Inventario Base" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Pre-Migración · Inventario</div>
@@ -509,11 +457,6 @@ html,body{width:100%;height:100%;overflow:hidden;font-family:var(--ff-body)}
   </div>
   <span class="big-red">DC</span>
 </div>
-
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 04 · HERRAMIENTAS DE DIAGNÓSTICO
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Herramientas de Diagnóstico" style="background:var(--surface)">
   <div class="pad-sm">
     <div class="tag reveal">Pre-Migración · Diagnóstico</div>
@@ -571,14 +514,8 @@ GET /rest/api/3/project/search
     </div>
   </div>
 </div>
-
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 05 · DIVIDER — AUTOMATIZACIONES
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Automatizaciones" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">AUDIT</span>
@@ -599,7 +536,7 @@ GET /rest/api/3/project/search
     </p>
   </div>
 
-  <!-- Checklist Grid -->
+
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -636,7 +573,6 @@ GET /rest/api/3/project/search
 
   </div>
 
-  <!-- Footer warning -->
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       INVENTARIAR CADA SCRIPT ANTES DEL PRIMER LOTE — UN SCRIPT ROTO EN PROD PUEDE BLOQUEAR FLUJOS COMPLETOS
@@ -645,9 +581,6 @@ GET /rest/api/3/project/search
 
 </div>
 
-<!-- ════════════════════════════════════════════════
-     SLIDE 06 · SCRIPTRUNNER
-════════════════════════════════════════════════ -->
 <div class="slide slide-dark" data-title="ScriptRunner">
   <div class="pad-sm">
     <div class="tag reveal">Automatizaciones</div>
@@ -722,10 +655,6 @@ ComponentAccessor.workflowManager
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 07 · AUTOMATION + MULE + PYTHON
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Automation / Mule / Python" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Automatizaciones</div>
@@ -795,13 +724,8 @@ headers = {
 </div>
 
 
-<!-- ════════════════════════════════════════════════
-     SLIDE 08 · DIVIDER — ESTRATEGIA 6K
-════════════════════════════════════════════════ -->
-
 <div class="slide slide-cover" data-title="Estrategia 6,000 proyectos" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">ESCALA</span>
@@ -819,7 +743,6 @@ headers = {
     </p>
   </div>
 
-  <!-- Tiers -->
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -868,7 +791,6 @@ headers = {
 
   </div>
 
-  <!-- Footer -->
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       CLASIFICAR ANTES DE MIGRAR — MOVER TODO SIN CRITERIO MULTIPLICA EL TIEMPO Y EL RIESGO DE FALLO
@@ -876,10 +798,6 @@ headers = {
   </div>
 
 </div>
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 09 · CLASIFICACIÓN DE PROYECTOS
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Clasificación de Proyectos" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Estrategia · +K Proyectos</div>
@@ -939,10 +857,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 10 · LOTES O COMPLETO
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Lotes vs Migración Completa" style="background:var(--surface)">
   <div class="pad-sm">
     <div class="tag reveal">Estrategia · Enfoque</div>
@@ -1006,13 +920,8 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 11 · DIVIDER — PLUGINS
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Plugins y Apps" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">APPS</span>
@@ -1030,7 +939,7 @@ headers = {
     </p>
   </div>
 
-  <!-- Plugin rows -->
+
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -1088,10 +997,6 @@ headers = {
 
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 12 · MATRIZ DE COMPATIBILIDAD APPS
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Compatibilidad de Apps" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Plugins · Compatibilidad</div>
@@ -1192,10 +1097,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 13 · DIVIDER — ERRORES COMUNES falta
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Errores Comunes" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
@@ -1214,7 +1115,6 @@ headers = {
     </p>
   </div>
 
-  <!-- Error rows -->
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -1263,7 +1163,7 @@ headers = {
 
   </div>
 
-  <!-- Footer -->
+
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       TODOS ESTOS ERRORES SON EVITABLES — NINGUNO TIENE EXCUSA SI SE EJECUTA LA FASE 0 CORRECTAMENTE
@@ -1272,10 +1172,6 @@ headers = {
 
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 14 · ERRORES TÉCNICOS
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Errores Técnicos" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Errores comunes · Técnicos</div>
@@ -1319,10 +1215,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 15 · MÁS ERRORES
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Más Errores a Evitar" style="background:var(--surface)">
   <div class="pad-sm">
     <div class="tag reveal">Errores comunes · Continuación</div>
@@ -1367,14 +1259,8 @@ headers = {
     </div>
   </div>
 </div>
-
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 16 · DIVIDER — USUARIOS FINALES
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Impacto a Usuarios" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">ADOPCIÓN</span>
@@ -1395,7 +1281,6 @@ headers = {
     </p>
   </div>
 
-  <!-- Action rows -->
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -1444,7 +1329,6 @@ headers = {
 
   </div>
 
-  <!-- Footer -->
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       LA MIGRACIÓN TÉCNICA PUEDE SER PERFECTA Y FRACASAR — EL USUARIO FINAL ES EL JUEZ DEL ÉXITO
@@ -1453,10 +1337,6 @@ headers = {
 
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 17 · ESTRATEGIA DE IMPACTO MÍNIMO
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Estrategia Usuarios" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Usuarios finales · Estrategia</div>
@@ -1521,12 +1401,9 @@ headers = {
 </div>
 
 
-<!-- ════════════════════════════════════════════════
-     SLIDE 18 · DIVIDER — MEJORES PRÁCTICAS
-════════════════════════════════════════════════ -->
+
 <div class="slide slide-cover" data-title="Mejores Prácticas" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">BEST PRACTICES</span>
@@ -1544,7 +1421,7 @@ headers = {
     </p>
   </div>
 
-  <!-- Practice rows -->
+
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -1593,7 +1470,6 @@ headers = {
 
   </div>
 
-  <!-- Footer -->
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       UNA MIGRACIÓN SIN DEUDA TÉCNICA NO ES MÁS LENTA — ES MÁS METÓDICA
@@ -1603,9 +1479,6 @@ headers = {
 </div>
 
 
-<!-- ════════════════════════════════════════════════
-     SLIDE 19 · CHECKLIST PRE-MIGRACIÓN
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Checklist Pre-Migración" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Mejores Prácticas · Checklist</div>
@@ -1642,10 +1515,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 20 · VALIDACIÓN POST-MIGRACIÓN
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Validación Post-Go-Live" style="background:var(--surface)">
   <div class="pad-sm">
     <div class="tag reveal">Mejores Prácticas · Post Go-Live</div>
@@ -1708,14 +1577,8 @@ headers = {
 </div>
 
 
-
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 21 · DIVIDER — OKTA / SSO
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Okta & SSO" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">IDENTIDAD</span>
@@ -1733,7 +1596,6 @@ headers = {
     </p>
   </div>
 
-  <!-- Identity rows -->
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -1782,7 +1644,6 @@ headers = {
 
   </div>
 
-  <!-- Footer -->
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       IDENTIDAD MAL CONFIGURADA = PERMISOS ROTOS EN TODA LA INSTANCIA — NO HAY WORKAROUND POST-MIGRACIÓN
@@ -1791,10 +1652,6 @@ headers = {
 
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 23 · OKTA CONFIGURACIÓN Y RIESGOS
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Okta — Configuración y Riesgos" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Identidad · Okta / SCIM / Atlassian Guard</div>
@@ -1843,9 +1700,6 @@ headers = {
 </div>
 
 
-<!-- ════════════════════════════════════════════════
-     SLIDE 24 · APPS: TEMPO, STRUCTURE, EAZYBI, RICH FILTERS
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Apps: Tempo, Structure, eazyBI, Rich Filters" style="background:var(--surface)">
   <div class="pad-sm">
     <div class="tag reveal">Apps · Migración específica por herramienta</div>
@@ -1921,13 +1775,8 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 24 · DIVIDER — VALIDACIÓN
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Validación Post-Migración" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">Pruebas de Aceptación de usuario - UAT</span>
@@ -1945,7 +1794,7 @@ headers = {
     </p>
   </div>
 
-  <!-- Validation rows -->
+
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -1994,7 +1843,7 @@ headers = {
 
   </div>
 
-  <!-- Footer -->
+
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       NO DECLARAR ÉXITO HASTA QUE CADA CAPA ESTÉ VALIDADA POR UN USUARIO REAL CON SU ROL REAL
@@ -2003,10 +1852,6 @@ headers = {
 
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 26 · VALIDACIÓN PROYECTO + ISSUES
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Validación: Proyecto e Issues" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Validación · Proyecto e Issues</div>
@@ -2059,10 +1904,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 27 · VALIDACIÓN WORKFLOW + PERMISOS + BOARDS
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Validación: Workflow, Permisos y Boards" style="background:var(--surface)">
   <div class="pad-sm">
     <div class="tag reveal">Validación · Workflow · Permisos · Boards</div>
@@ -2133,10 +1974,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 28 · VALIDACIÓN APPS + INTEGRIDAD + SMOKE TEST
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Validación Apps e Integridad" style="background:var(--bg)">
   <div class="pad-sm">
     <div class="tag reveal">Validación · Apps · Integridad Técnica · Smoke Test</div>
@@ -2196,13 +2033,8 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 29 · DIVIDER — RUNBOOK
-════════════════════════════════════════════════ -->
 <div class="slide slide-cover" data-title="Runbook" style="display:flex;flex-direction:column;justify-content:space-between;padding:40px 36px">
 
-  <!-- Header -->
   <div>
     <div style="display:flex;align-items:center;gap:8px;margin-bottom:28px">
       <span style="font-family:var(--ff-mono);font-size:10px;letter-spacing:1.5px;color:var(--red);text-transform:uppercase">RUNBOOK</span>
@@ -2222,7 +2054,6 @@ headers = {
     </div>
   </div>
 
-  <!-- Timeline rows -->
   <div class="reveal d3" style="display:flex;flex-direction:column;gap:2px;margin-top:24px">
 
     <div style="display:flex;align-items:flex-start;gap:16px;padding:14px 16px;background:rgba(255,255,255,.05);border-radius:6px;border:1px solid rgba(255,255,255,.07)">
@@ -2271,7 +2102,6 @@ headers = {
 
   </div>
 
-  <!-- Footer -->
   <div class="reveal d4" style="margin-top:20px;padding:12px 16px;background:rgba(27,92,232,.08);border-left:2px solid var(--red);border-radius:3px">
     <p style="margin:0;font-family:var(--ff-mono);font-size:10.5px;letter-spacing:.5px;color:rgba(255,255,255,.5)">
       CADA MINUTO FUERA DE VENTANA TIENE UN COSTO — EL EQUIPO DEBE SABER SU ROL ANTES DE LAS 19:00
@@ -2280,10 +2110,6 @@ headers = {
 
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 30 · RUNBOOK FASES I + II
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Runbook — Ejecución" style="background:var(--ink)">
   <div style="padding:32px 44px 72px;height:100%;overflow:hidden">
     <div class="tag reveal" style="color:var(--red)">Runbook · Día de Migración</div>
@@ -2339,10 +2165,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 31 · RUNBOOK — UAT Y CIERRE
-════════════════════════════════════════════════ -->
 <div class="slide" data-title="Runbook — UAT y Cierre" style="background:var(--surface)">
   <div class="pad-sm">
     <div class="tag reveal">Runbook · Validación UAT · Cierre</div>
@@ -2398,10 +2220,6 @@ headers = {
   </div>
 </div>
 
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 32 · LECCIONES APRENDIDAS
-════════════════════════════════════════════════ -->
 <div class="slide slide-dark" data-title="Lecciones Aprendidas" style="background:var(--ink)">
   <div class="two-col" style="height:100%">
     <div style="padding:48px 44px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.07)">
@@ -2445,11 +2263,6 @@ headers = {
   </div>
 </div>
 
-
-
-<!-- ════════════════════════════════════════════════
-     SLIDE 21 · CIERRE
-════════════════════════════════════════════════ -->
 <div class="slide slide-dark" data-title="Resumen Final">
   <div style="display:grid;grid-template-columns:1fr 1fr;height:100%">
     <div style="padding:72px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid rgba(255,255,255,.07)">
@@ -2526,10 +2339,7 @@ headers = {
 </div>
 
 
-</div><!-- /deck -->
-
-
-<!-- ── NAV BAR ─────────────────────────────── -->
+</div>
 <div class="nav-bar">
   <span class="nav-counter" id="navCounter">01 / 21</span>
   <span class="nav-title" id="navTitle">Inicio</span>
@@ -2569,17 +2379,12 @@ function navigate(dir) {
   animating = true;
   const cur  = slides[current];
   const nxt  = slides[next];
-
-  // Determine exit/enter direction
   const exitClass  = dir > 0 ? 'exit-left'   : 'exit-right';
   const enterClass = dir > 0 ? 'enter-right'  : 'enter-left';
-
-  // Show next, start enter animation
   nxt.style.opacity = '1';
   nxt.style.pointerEvents = 'all';
   nxt.classList.add(enterClass);
 
-  // Exit current
   cur.classList.add(exitClass);
 
   const DURATION = 550;
@@ -2588,7 +2393,6 @@ function navigate(dir) {
     cur.classList.remove('active', exitClass);
     cur.style.opacity = '';
     cur.style.pointerEvents = '';
-    // Reset reveals on old slide
     cur.querySelectorAll('.reveal').forEach(el => {
       el.classList.remove('visible');
     });
@@ -2602,13 +2406,12 @@ function navigate(dir) {
   }, DURATION);
 }
 
-// Keyboard
 document.addEventListener('keydown', e => {
   if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ')  { e.preventDefault(); navigate(1); }
   if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); navigate(-1); }
 });
 
-// Touch / swipe
+
 let touchStartX = 0;
 document.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; }, {passive:true});
 document.addEventListener('touchend',   e => {
@@ -2616,7 +2419,6 @@ document.addEventListener('touchend',   e => {
   if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
 }, {passive:true});
 
-// Reveal observer
 const revealObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
@@ -2625,14 +2427,13 @@ const revealObserver = new IntersectionObserver(entries => {
   });
 }, { threshold: 0.05 });
 
-// Trigger reveals when slide becomes active
+
 function triggerReveals(slideEl) {
   slideEl.querySelectorAll('.reveal').forEach(el => {
     el.classList.add('visible');
   });
 }
 
-// Patch navigate to trigger reveals after transition
 const origNavigate = navigate;
 function navigate(dir) {
   if (animating) return;
@@ -2664,14 +2465,12 @@ function navigate(dir) {
     current = next;
     updateUI();
 
-    // Trigger reveals with slight delay for visual effect
     setTimeout(() => triggerReveals(nxt), 60);
 
     animating = false;
   }, DURATION);
 }
 
-// Init first slide reveals
 setTimeout(() => triggerReveals(slides[0]), 150);
 updateUI();
 </script>
